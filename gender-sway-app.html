@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gender Sway Explorer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .intro {
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+            color: #555;
+        }
+
+        .goal-selection {
+            margin: 40px 0;
+        }
+
+        .goal-selection h2 {
+            margin-bottom: 20px;
+            color: #667eea;
+            font-size: 1.5rem;
+        }
+
+        .goal-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .goal-btn {
+            padding: 20px;
+            border: 2px solid #667eea;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #667eea;
+        }
+
+        .goal-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .goal-btn.selected {
+            background: #667eea;
+            color: white;
+        }
+
+        .factors-section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .factors-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .factor-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #fafafa;
+            transition: all 0.3s;
+        }
+
+        .factor-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
+        }
+
+        .factor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .factor-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .factor-direction {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .direction-boy {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .direction-girl {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+
+        .direction-unclear {
+            background: #f5f5f5;
+            color: #757575;
+        }
+
+        .evidence-rating {
+            color: #ff9800;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .factor-description {
+            color: #555;
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .mechanism-box {
+            background: white;
+            border-left: 3px solid #667eea;
+            padding: 12px;
+            margin-top: 12px;
+            border-radius: 4px;
+        }
+
+        .mechanism-label {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+        }
+
+        .mechanism-text {
+            font-size: 0.95rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .disclaimer {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .disclaimer h3 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .disclaimer p {
+            color: #856404;
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            background: #f5f5f5;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .evidence-legend {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 30px;
+        }
+
+        .evidence-legend h3 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .legend-stars {
+            color: #ff9800;
+            margin-right: 10px;
+            min-width: 80px;
+        }
+
+        .legend-text {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍌 Conceptual: Preconception Gender Nudge</h1>
+            <p class="tagline">Exploring what the (messy) science suggests about factors that may influence baby sex</p>
+        </header>
+
+        <div class="content">
+            <div class="intro">
+                <p>This tool explores observational evidence on factors that <em>may</em> be associated with shifts in sex ratios at birth. The science here is all pretty weak—no randomized trials, lots of recall bias, small effect sizes if real. Think of this as a way to understand what researchers have found, not as a prescription.</p>
+                <p style="margin-top: 12px;">The biological mechanism is uncertain: it could be differential fertilization (which sperm wins), differential implantation (which embryo sticks), or differential viability (which pregnancy continues). We're aiming for net effects that result in a baby of your preferred sex, not unintentional miscarriages.</p>
+                <p style="margin-top: 12px; padding: 15px; background: #e8f5e9; border-left: 4px solid #4caf50; border-radius: 4px;"><strong>⏱️ Timeline:</strong> Most research suggests that dietary and lifestyle changes need to be implemented for <strong>3-6 months before conception</strong> for optimal effects. This isn't a quick fix—it's about gradually shifting your metabolic and physiological environment.</p>
+            </div>
+
+            <div class="goal-selection">
+                <h2>What brings you here today?</h2>
+                <div class="goal-buttons">
+                    <button class="goal-btn" onclick="selectGoal('boy')">
+                        💙 Exploring factors that may nudge toward boys
+                    </button>
+                    <button class="goal-btn" onclick="selectGoal('girl')">
+                        💗 Exploring factors that may nudge toward girls
+                    </button>
+                    <button class="goal-btn" onclick="selectGoal('curious')">
+                        🤔 Just curious about the science
+                    </button>
+                </div>
+            </div>
+
+            <div id="factorsSection" class="factors-section">
+                <div class="evidence-legend">
+                    <h3>Evidence Quality Guide</h3>
+                    <div class="legend-item">
+                        <span class="legend-stars">★★☆☆</span>
+                        <span class="legend-text">Some observational studies suggest this association, but findings are inconsistent or subject to significant bias</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-stars">★☆☆☆</span>
+                        <span class="legend-text">Very limited or highly contested evidence; treat as speculative</span>
+                    </div>
+                </div>
+
+                <div id="factorsList"></div>
+
+                <div class="disclaimer">
+                    <h3>🐻 Find the bear: A note on epistemic humility</h3>
+                    <p>Sex ratios vary naturally by only a few percentage points. Even if these associations are real (and that's a big if), the effects are subtle. No intervention can guarantee a specific outcome.</p>
+                    <p>This tool is for exploration and education. The research cited is observational, not experimental. We don't know if these factors <em>cause</em> sex ratio shifts or just happen to be correlated with them. We don't know if attempting to manipulate them would work, or what unintended consequences might follow.</p>
+                    <p>As with cancer screenings and vaccine endpoints, we have to think carefully about what we're measuring, what we want to know, and how much uncertainty remains. The endpoint rainbow here is wide: fertilization, implantation, viability, birth, and all the biological and evolutionary mechanisms in between.</p>
+                    <p><strong>Count the bodies.</strong> And here, the bodies we're counting are <em>actual bodies</em>—babies. This is a beautiful case study where we can empirically test whether dietary and lifestyle interventions shift sex ratios. With enough participants tracking their efforts and outcomes, we could move from observational correlations to real-world evidence. That's the goal: turn speculation into data, one baby at a time.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Built with epistemic humility and a healthy dose of uncertainty.</p>
+            <p style="margin-top: 8px;">For more on thinking carefully about evidence, measurement, and what we really know, visit <a href="https://wildetruth.substack.com" target="_blank" style="color: #667eea;">Wilde Truth</a>.</p>
+        </div>
+    </div>
+
+    <script>
+        const factors = [
+            {
+                name: "Caloric Intake",
+                direction: "boy",
+                evidence: "★★☆☆",
+                description: "Some observational studies suggest that higher caloric intake around the time of conception may be associated with a higher proportion of male births. The proposed mechanism relates to maternal resource availability signaling a supportive environment for the more developmentally expensive male fetus.",
+                mechanism: "Trivers-Willard hypothesis: In resource-rich conditions, investing in male offspring may have historically provided greater reproductive returns. Higher calories might signal this abundance, but the causal pathway (fertilization vs. viability) remains unclear.",
+                directionLabel: "May favor boys"
+            },
+            {
+                name: "Timing Relative to Ovulation",
+                direction: "mixed",
+                evidence: "★★☆☆",
+                description: "The Shettles method and similar approaches suggest that intercourse timing relative to ovulation might influence sex ratio, with conception closer to ovulation potentially favoring males and earlier conception favoring females. The biological plausibility is debated and evidence is mixed.",
+                mechanism: "Proposed that Y-sperm (male) are faster but less resilient than X-sperm (female), so timing might matter. However, controlled studies have not consistently supported this, and the mechanism may involve other factors like cervical environment or maternal physiology.",
+                directionLabel: "Unclear/Mixed"
+            },
+            {
+                name: "Maternal Stress",
+                direction: "girl",
+                evidence: "★★☆☆",
+                description: "Some research finds that maternal psychological and physiological stress (measured via cortisol or life stressors) is associated with a higher proportion of female births. This fits with the idea that stressed mothers might preferentially carry female fetuses to term.",
+                mechanism: "Male fetuses may be more vulnerable to maternal stress, leading to higher miscarriage rates, or there may be evolved mechanisms to adaptively adjust sex ratio based on environmental conditions. The exact pathway—whether selection or adjustment—is uncertain.",
+                directionLabel: "May favor girls"
+            },
+            {
+                name: "Iron & Meat Intake",
+                direction: "boy",
+                evidence: "★★☆☆",
+                description: "Limited evidence suggests that higher iron intake and higher meat consumption may be associated with male-biased sex ratios. This could relate to overall nutritional status or specific micronutrient effects.",
+                mechanism: "Iron-rich diets may signal maternal health and resource availability, fitting the Trivers-Willard framework. Alternatively, iron or other components of meat might influence the intrauterine environment in ways that favor male conception or viability.",
+                directionLabel: "May favor boys"
+            },
+            {
+                name: "Breakfast Calories",
+                direction: "boy",
+                evidence: "★★☆☆",
+                description: "A few studies (notably one from 2008) found that women who ate breakfast regularly and consumed more calories at breakfast were more likely to have male babies. This is often called the 'breakfast effect,' though replication is limited.",
+                mechanism: "Unclear, but possibly related to glucose availability or metabolic signaling around conception. Could overlap with the general caloric intake hypothesis but with a timing component. Highly speculative.",
+                directionLabel: "May favor boys"
+            }
+        ];
+
+        let currentGoal = null;
+
+        function selectGoal(goal) {
+            currentGoal = goal;
+            
+            // Update button states
+            document.querySelectorAll('.goal-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+
+            // Show factors section
+            const factorsSection = document.getElementById('factorsSection');
+            factorsSection.classList.add('active');
+
+            // Render factors based on goal
+            renderFactors(goal);
+
+            // Smooth scroll to factors
+            setTimeout(() => {
+                factorsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+
+        function renderFactors(goal) {
+            const factorsList = document.getElementById('factorsList');
+            
+            let filteredFactors = factors;
+            let headerText = '';
+
+            if (goal === 'boy') {
+                filteredFactors = factors.filter(f => f.direction === 'boy' || f.direction === 'mixed');
+                headerText = '<h2 style="color: #1976d2; margin-bottom: 20px;">Factors that may favor male births (or are unclear)</h2>';
+            } else if (goal === 'girl') {
+                filteredFactors = factors.filter(f => f.direction === 'girl' || f.direction === 'mixed');
+                headerText = '<h2 style="color: #c2185b; margin-bottom: 20px;">Factors that may favor female births (or are unclear)</h2>';
+            } else {
+                headerText = '<h2 style="color: #667eea; margin-bottom: 20px;">All factors under investigation</h2>';
+            }
+
+            factorsList.innerHTML = headerText + filteredFactors.map(factor => `
+                <div class="factor-card">
+                    <div class="factor-header">
+                        <div class="factor-name">${factor.name}</div>
+                        <div class="factor-direction direction-${factor.direction}">
+                            ${factor.directionLabel}
+                        </div>
+                    </div>
+                    <div class="evidence-rating">${factor.evidence}</div>
+                    <div class="factor-description">${factor.description}</div>
+                    <div class="mechanism-box">
+                        <div class="mechanism-label">Proposed mechanism (uncertain):</div>
+                        <div class="mechanism-text">${factor.mechanism}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
