@@ -263,7 +263,7 @@
 
         <div class="content">
             <div class="intro">
-                <p>This tool lets people explore the messy scientific evidence on possible sex ratio shifts. Effect sizes are small, perhaps on the order of 10%, if there is a real signal in the noise at all (we don't know).</p>
+                <p>This tool lets people explore the messy scientific evidence on possible sex ratio shifts. Effect sizes are small, perhaps on the order of 5-15 percentage points at best, if there is a real signal in the noise at all (we don't know).</p>
                 <p style="margin-top: 12px;">Mechanisms are unknown: it could be differential fertilization (which sperm wins, or which the egg lets in) or differential viability (which pregnancy continues). We're aiming for net effects that result in a baby of your preferred gender.</p>
                 <p style="margin-top: 12px; padding: 15px; background: #e8f5e9; border-left: 4px solid #4caf50; border-radius: 4px;"><strong>⏱️ Timeline:</strong> Just like other preconception changes, these dietary and lifestyle nudges may need to be implemented for <strong>3-6 months before conception</strong> for best results.</p>
             </div>
@@ -287,12 +287,16 @@
                 <div class="evidence-legend">
                     <h3>Evidence Quality Guide</h3>
                     <div class="legend-item">
+                        <span class="legend-stars">★★★☆</span>
+                        <span class="legend-text">Most consistent signal across multiple studies and species; still observational, not experimental</span>
+                    </div>
+                    <div class="legend-item">
                         <span class="legend-stars">★★☆☆</span>
                         <span class="legend-text">Some observational studies suggest this association, but findings are inconsistent or subject to significant bias</span>
                     </div>
                     <div class="legend-item">
                         <span class="legend-stars">★☆☆☆</span>
-                        <span class="legend-text">Very limited or highly contested evidence; treat as speculative</span>
+                        <span class="legend-text">Very limited or highly contested evidence; proposed mechanism debunked or highly speculative</span>
                     </div>
                 </div>
 
@@ -303,7 +307,7 @@
                     <p>Sex ratios vary naturally by only a few percentage points. Even if these associations are real (and that's a big if), the effects are subtle. No intervention can guarantee a specific outcome.</p>
                     <p>This tool is for exploration and education. The research cited is observational, not experimental. We don't know if these factors <em>cause</em> sex ratio shifts or just happen to be correlated with them. We don't know if attempting to manipulate them would work, or what unintended consequences might follow.</p>
                     <p>As with cancer screenings and vaccine endpoints, we have to think carefully about what we're measuring, what we want to know, and how much uncertainty remains. The endpoint rainbow here is wide: fertilization, implantation, viability, birth, and all the biological and evolutionary mechanisms in between.</p>
-                    <p><strong>Count the bodies.</strong> And here, the bodies we're counting are <em>actual bodies</em>—babies. This is a beautiful case study where we can empirically test whether dietary and lifestyle interventions shift sex ratios. With enough participants tracking their efforts and outcomes, we could move from observational correlations to real-world evidence. That's the goal: turn speculation into data, one baby at a time.</p>
+                    <p><strong>Count the bodies.</strong> Here, the bodies we're counting are actual bodies: babies. This is a beautiful case study where we can empirically test whether dietary and lifestyle interventions shift sex ratios compared to population baselines. With enough participants tracking their efforts and outcomes, and follow-up studies investigating mechanisms further, we could eventually move from correlation to causation—if there's a signal in the noise.</p>
                     <p style="margin-top: 12px;"><strong>Read more:</strong> For the full literature review, causal diagrams, and methodological discussion, see the <a href="BLOG_POST_URL_HERE" target="_blank" style="color: #667eea; text-decoration: underline;">blog post on this project</a>.</p>
                 </div>
             </div>
@@ -318,44 +322,60 @@
     <script>
         const factors = [
             {
-                name: "Caloric Intake",
+                name: "Sodium & Potassium (Na/K)",
                 direction: "boy",
-                evidence: "★★☆☆",
-                description: "Some observational studies suggest that higher caloric intake around the time of conception may be associated with a higher proportion of male births. The proposed mechanism relates to maternal resource availability signaling a supportive environment for the more developmentally expensive male fetus.",
-                mechanism: "Trivers-Willard hypothesis: In resource-rich conditions, investing in male offspring may have historically provided greater reproductive returns. Higher calories might signal this abundance, but the causal pathway (fertilization vs. viability) remains unclear.",
+                evidence: "★★★☆",
+                description: "The most consistent signal in the literature. Multiple studies across species (including humans, rats) find that higher sodium and potassium intake is associated with male-biased sex ratios. Sodium (table salt) and potassium-rich foods (bananas, processed foods) show this pattern. This is your blog author's 'accidentally hit the Na mechanism hard' factor.",
+                mechanism: "Ionic environment may affect sperm selection or early embryo viability. Salt's historical connection to resources (salary = salt allowance) fits Trivers-Willard. Exact mechanism unknown but signal is relatively consistent.",
                 directionLabel: "May favor boys"
             },
             {
-                name: "Timing Relative to Ovulation",
-                direction: "mixed",
-                evidence: "★★☆☆",
-                description: "The Shettles method and similar approaches suggest that intercourse timing relative to ovulation might influence sex ratio, with conception closer to ovulation potentially favoring males and earlier conception favoring females. The biological plausibility is debated and evidence is mixed.",
-                mechanism: "Proposed that Y-sperm (male) are faster but less resilient than X-sperm (female), so timing might matter. However, controlled studies have not consistently supported this, and the mechanism may involve other factors like cervical environment or maternal physiology.",
-                directionLabel: "Unclear/Mixed"
+                name: "Calcium & Magnesium (Ca/Mg)",
+                direction: "girl",
+                evidence: "★★★☆",
+                description: "The inverse of Na/K. Studies find that higher calcium and magnesium intake (dairy, leafy greens, nuts, chocolate) is associated with female-biased sex ratios. Noorlander et al. 2010 found 76% girls among women following low Na/K, high Ca/Mg diets combined with timing.",
+                mechanism: "Ionic environment hypothesis. May affect zona pellucida permeability or early embryo environment. Animal studies support the pattern, though human evidence remains observational.",
+                directionLabel: "May favor girls"
             },
             {
-                name: "Maternal Stress",
-                direction: "girl",
+                name: "Caloric Intake (especially breakfast)",
+                direction: "boy",
                 evidence: "★★☆☆",
-                description: "Some research finds that maternal psychological and physiological stress (measured via cortisol or life stressors) is associated with a higher proportion of female births. This fits with the idea that stressed mothers might preferentially carry female fetuses to term.",
-                mechanism: "Male fetuses may be more vulnerable to maternal stress, leading to higher miscarriage rates, or there may be evolved mechanisms to adaptively adjust sex ratio based on environmental conditions. The exact pathway—whether selection or adjustment—is uncertain.",
-                directionLabel: "May favor girls"
+                description: "Higher overall caloric intake, especially at breakfast, is associated with male births in some studies (Mathews et al. 2008: 56% vs 45% boys in highest vs lowest calorie tertiles). However, replication efforts have been mixed—Dutch Hunger Winter found no effect, Chinese famine data is disputed.",
+                mechanism: "Trivers-Willard hypothesis: resource-rich conditions favor investment in males. Breakfast effect may relate to glucose availability at conception. Effect sizes range from possibly negligible (~2pp) to modest (~11-19pp) based on confidence intervals.",
+                directionLabel: "May favor boys"
+            },
+            {
+                name: "Maternal Stress & Cortisol",
+                direction: "mixed",
+                evidence: "★★☆☆",
+                description: "Higher maternal stress (measured via cortisol) is fairly consistently associated with female-biased sex ratios, while lower stress associates with male-biased ratios. Unlike other factors, stress is modifiable in both directions through evidence-based lifestyle interventions.",
+                mechanism: "Fragile male hypothesis: male fetuses may be more vulnerable to stress hormones. Stress can be purposefully modulated—low-to-moderate exercise, yoga, meditation lower cortisol (boys); HIIT, vigorous training, athletic challenges, or cognitively demanding tasks raise it within healthy ranges (girls). The key is eustress (positive, growth-oriented challenge) vs. chronic harmful stress.",
+                directionLabel: "Bidirectionally nudgeable"
+            },
+            {
+                name: "Partner Proximity / Cohabitation",
+                direction: "boy",
+                evidence: "★★☆☆",
+                description: "Some evidence suggests that women living with their partners (especially in stable relationships) are more likely to have boys. The mechanism is unclear and this is obviously not a practical nudge.",
+                mechanism: "Could relate to stress levels, coital frequency, or other unmeasured factors. Tracking this helps control for confounding rather than providing a nudge.",
+                directionLabel: "May favor boys"
             },
             {
                 name: "Iron & Meat Intake",
                 direction: "boy",
                 evidence: "★★☆☆",
-                description: "Limited evidence suggests that higher iron intake and higher meat consumption may be associated with male-biased sex ratios. This could relate to overall nutritional status or specific micronutrient effects.",
-                mechanism: "Iron-rich diets may signal maternal health and resource availability, fitting the Trivers-Willard framework. Alternatively, iron or other components of meat might influence the intrauterine environment in ways that favor male conception or viability.",
-                directionLabel: "May favor boys"
+                description: "Higher iron intake and meat consumption show associations with male-biased sex ratios. However, this is confounded by inflammation: women with autoimmune conditions or inflammation may have both lower iron AND higher male fetal loss, creating spurious correlations.",
+                mechanism: "May signal maternal health/resources per Trivers-Willard. But inflammation confound is serious—see blog DAGs. Don't avoid iron for health reasons to chase gender outcomes.",
+                directionLabel: "May favor boys (confounded)"
             },
             {
-                name: "Breakfast Calories",
-                direction: "boy",
-                evidence: "★★☆☆",
-                description: "A few studies (notably one from 2008) found that women who ate breakfast regularly and consumed more calories at breakfast were more likely to have male babies. This is often called the 'breakfast effect,' though replication is limited.",
-                mechanism: "Unclear, but possibly related to glucose availability or metabolic signaling around conception. Could overlap with the general caloric intake hypothesis but with a timing component. Highly speculative.",
-                directionLabel: "May favor boys"
+                name: "Timing Relative to Ovulation",
+                direction: "mixed",
+                evidence: "★☆☆☆",
+                description: "The Shettles method suggested timing matters. However, the proposed mechanism (Y-sperm swim faster) has been definitively debunked by modern microscopy—no morphological or motility differences exist between X and Y sperm. Some studies still find timing associations, but without a plausible mechanism.",
+                mechanism: "Original Shettles hypothesis is dead. If timing matters at all, it might work through glucose levels at conception, cervical mucus quality, or egg-side selection (Grant hypothesis)—but this is highly speculative.",
+                directionLabel: "Highly Contested"
             }
         ];
 
