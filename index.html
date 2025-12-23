@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gender Sway Explorer</title>
+    <title>Conceptual: Preconception Gender Nudge</title>
+    <link rel="icon" type="image/png" href="conceptual_favicon.png">
+    <link rel="apple-touch-icon" href="conceptual_favicon.png">
     <style>
         * {
             margin: 0;
@@ -30,10 +32,17 @@
         }
 
         header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px 30px;
+            background: linear-gradient(135deg, #e3f2fd 0%, #fce4ec 100%);
+            color: #333;
+            padding: 30px 30px;
             text-align: center;
+        }
+
+        .logo {
+            max-width: 400px;
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
         }
 
         h1 {
@@ -156,6 +165,11 @@
             color: #c2185b;
         }
 
+        .direction-mixed {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
         .direction-unclear {
             background: #f5f5f5;
             color: #757575;
@@ -257,28 +271,25 @@
 <body>
     <div class="container">
         <header>
-            <h1>🍌 Gender Sway Explorer</h1>
+            <img src="conceptual_logo.png" alt="Conceptual: Preconception Gender Nudge" class="logo">
             <p class="tagline">Exploring what the (messy) science suggests about factors that may influence baby sex</p>
         </header>
 
         <div class="content">
             <div class="intro">
-                <p>This tool explores observational evidence on factors that <em>may</em> be associated with shifts in sex ratios at birth. The science here is all pretty weak—no randomized trials, lots of recall bias, small effect sizes if real. Think of this as a way to understand what researchers have found, not as a prescription.</p>
-                <p style="margin-top: 12px;">The biological mechanism is uncertain: it could be differential fertilization (which sperm wins), differential implantation (which embryo sticks), or differential viability (which pregnancy continues). We're aiming for net effects that result in a baby of your preferred sex, not unintentional miscarriages.</p>
-                <p style="margin-top: 12px; padding: 15px; background: #e8f5e9; border-left: 4px solid #4caf50; border-radius: 4px;"><strong>⏱️ Timeline:</strong> Most research suggests that dietary and lifestyle changes need to be implemented for <strong>3-6 months before conception</strong> for optimal effects. This isn't a quick fix—it's about gradually shifting your metabolic and physiological environment.</p>
+                <p>This tool lets people explore the messy scientific evidence on possible sex ratio shifts. Effect sizes are small, perhaps on the order of 5-15 percentage points at best, if there is a real signal in the noise at all (we don't know).</p>
+                <p style="margin-top: 12px;">Mechanisms are unknown: it could be differential fertilization (which sperm wins, or which the egg lets in) or differential viability (which pregnancy continues). We're aiming for net effects that result in a baby of your preferred gender.</p>
+                <p style="margin-top: 12px; padding: 15px; background: #e8f5e9; border-left: 4px solid #4caf50; border-radius: 4px;"><strong>⏱️ Timeline:</strong> Just like other preconception changes, these dietary and lifestyle nudges may need to be implemented for <strong>3-6 months before conception</strong> for best results.</p>
             </div>
 
             <div class="goal-selection">
-                <h2>What brings you here today?</h2>
+                <h2>What's your goal?</h2>
                 <div class="goal-buttons">
                     <button class="goal-btn" onclick="selectGoal('boy')">
-                        💙 Exploring factors that may nudge toward boys
+                        💙 Nudge toward boy
                     </button>
                     <button class="goal-btn" onclick="selectGoal('girl')">
-                        💗 Exploring factors that may nudge toward girls
-                    </button>
-                    <button class="goal-btn" onclick="selectGoal('curious')">
-                        🤔 Just curious about the science
+                        💗 Nudge toward girl
                     </button>
                 </div>
             </div>
@@ -287,12 +298,16 @@
                 <div class="evidence-legend">
                     <h3>Evidence Quality Guide</h3>
                     <div class="legend-item">
+                        <span class="legend-stars">★★★☆</span>
+                        <span class="legend-text">Most consistent signal across multiple studies and species; still observational, not experimental</span>
+                    </div>
+                    <div class="legend-item">
                         <span class="legend-stars">★★☆☆</span>
                         <span class="legend-text">Some observational studies suggest this association, but findings are inconsistent or subject to significant bias</span>
                     </div>
                     <div class="legend-item">
                         <span class="legend-stars">★☆☆☆</span>
-                        <span class="legend-text">Very limited or highly contested evidence; treat as speculative</span>
+                        <span class="legend-text">Very limited or highly contested evidence; proposed mechanism debunked or highly speculative</span>
                     </div>
                 </div>
 
@@ -303,7 +318,8 @@
                     <p>Sex ratios vary naturally by only a few percentage points. Even if these associations are real (and that's a big if), the effects are subtle. No intervention can guarantee a specific outcome.</p>
                     <p>This tool is for exploration and education. The research cited is observational, not experimental. We don't know if these factors <em>cause</em> sex ratio shifts or just happen to be correlated with them. We don't know if attempting to manipulate them would work, or what unintended consequences might follow.</p>
                     <p>As with cancer screenings and vaccine endpoints, we have to think carefully about what we're measuring, what we want to know, and how much uncertainty remains. The endpoint rainbow here is wide: fertilization, implantation, viability, birth, and all the biological and evolutionary mechanisms in between.</p>
-                    <p><strong>Count the bodies.</strong> And here, the bodies we're counting are <em>actual bodies</em>—babies. This is a beautiful case study where we can empirically test whether dietary and lifestyle interventions shift sex ratios. With enough participants tracking their efforts and outcomes, we could move from observational correlations to real-world evidence. That's the goal: turn speculation into data, one baby at a time.</p>
+                    <p><strong>Count the bodies.</strong> Here, the bodies we're counting are actual bodies: babies. This is a beautiful case study where we can empirically test whether dietary and lifestyle interventions shift sex ratios compared to population baselines. With enough participants tracking their efforts and outcomes, and follow-up studies investigating mechanisms further, we could eventually move from correlation to causation—if there's a signal in the noise.</p>
+                    <p style="margin-top: 12px;"><strong>Read more:</strong> For the full literature review, causal diagrams, and methodological discussion, see the <a href="https://wildetruth.substack.com/p/gender-fudging-can-maternal-ecology" target="_blank" style="color: #667eea; text-decoration: underline;">blog post on this project</a>.</p>
                 </div>
             </div>
         </div>
@@ -317,44 +333,92 @@
     <script>
         const factors = [
             {
-                name: "Caloric Intake",
+                name: "Sodium & Potassium (Na/K)",
+                direction: "boy",
+                evidence: "★★★☆",
+                description: "The most consistent signal in the literature. Multiple studies across species (including humans, rats) find that higher sodium and potassium intake is associated with male-biased sex ratios. Sodium (table salt) and potassium-rich foods (bananas, processed foods) show this pattern. This is your blog author's 'accidentally hit the Na mechanism hard' factor.",
+                mechanism: "Ionic environment may affect sperm selection or early embryo viability. Salt's historical connection to resources (salary = salt allowance) fits Trivers-Willard. Exact mechanism unknown but signal is relatively consistent.",
+                directionLabel: "Nudge boy"
+            },
+            {
+                name: "Calcium & Magnesium (Ca/Mg)",
+                direction: "girl",
+                evidence: "★★★☆",
+                description: "The inverse of Na/K. Studies find that higher calcium and magnesium intake (dairy, leafy greens, nuts, chocolate) is associated with female-biased sex ratios. Noorlander et al. 2010 found 76% girls among women following low Na/K, high Ca/Mg diets combined with timing.",
+                mechanism: "Ionic environment hypothesis. May affect zona pellucida permeability or early embryo environment. Animal studies support the pattern, though human evidence remains observational.",
+                directionLabel: "Nudge girl"
+            },
+            {
+                name: "Caloric Intake (especially breakfast)",
                 direction: "boy",
                 evidence: "★★☆☆",
-                description: "Some observational studies suggest that higher caloric intake around the time of conception may be associated with a higher proportion of male births. The proposed mechanism relates to maternal resource availability signaling a supportive environment for the more developmentally expensive male fetus.",
-                mechanism: "Trivers-Willard hypothesis: In resource-rich conditions, investing in male offspring may have historically provided greater reproductive returns. Higher calories might signal this abundance, but the causal pathway (fertilization vs. viability) remains unclear.",
-                directionLabel: "May favor boys"
+                description: "Higher overall caloric intake, especially at breakfast, is associated with male births in some studies (Mathews et al. 2008: 56% vs 45% boys in highest vs lowest calorie tertiles). However, replication efforts have been mixed—Dutch Hunger Winter found no effect, Chinese famine data is disputed.",
+                mechanism: "Trivers-Willard hypothesis: resource-rich conditions favor investment in males. Breakfast effect may relate to glucose availability at conception. Effect sizes range from possibly negligible (~2pp) to modest (~11-19pp) based on confidence intervals.",
+                directionLabel: "Nudge boy"
             },
             {
-                name: "Timing Relative to Ovulation",
-                direction: "mixed",
+                name: "High Glycemic Index Foods",
+                direction: "boy",
                 evidence: "★★☆☆",
-                description: "The Shettles method and similar approaches suggest that intercourse timing relative to ovulation might influence sex ratio, with conception closer to ovulation potentially favoring males and earlier conception favoring females. The biological plausibility is debated and evidence is mixed.",
-                mechanism: "Proposed that Y-sperm (male) are faster but less resilient than X-sperm (female), so timing might matter. However, controlled studies have not consistently supported this, and the mechanism may involve other factors like cervical environment or maternal physiology.",
-                directionLabel: "Unclear/Mixed"
+                description: "Higher blood glucose levels may favor male blastocyst survival. Eichner & Timpe 2012 found small but stable sex ratio differences by maternal glycemic status. Heat also raises blood glucose, which may explain some seasonality findings. High-GI foods include white bread, sugary cereals, potatoes, white rice, and sweetened drinks.",
+                mechanism: "Trivers-Willard pathway: glucose availability may differentially affect male vs female blastocyst survival in the early embryonic environment. Distinct from total calories—you can eat the same calories but with different glycemic impact.",
+                directionLabel: "Nudge boy"
             },
             {
-                name: "Maternal Stress",
+                name: "Low Glycemic Index Foods",
                 direction: "girl",
                 evidence: "★★☆☆",
-                description: "Some research finds that maternal psychological and physiological stress (measured via cortisol or life stressors) is associated with a higher proportion of female births. This fits with the idea that stressed mothers might preferentially carry female fetuses to term.",
-                mechanism: "Male fetuses may be more vulnerable to maternal stress, leading to higher miscarriage rates, or there may be evolved mechanisms to adaptively adjust sex ratio based on environmental conditions. The exact pathway—whether selection or adjustment—is uncertain.",
-                directionLabel: "May favor girls"
+                description: "Keeping blood glucose stable and lower may favor female outcomes. Low-GI foods include whole grains, legumes, most vegetables, nuts, and foods with fiber and protein that slow glucose absorption. This is the inverse of the high-GI pattern.",
+                mechanism: "If higher glucose favors male blastocysts per Trivers-Willard, then lower/stable glucose may create conditions relatively more favorable to female embryos. Pair with Ca/Mg-rich foods for combined effect.",
+                directionLabel: "Nudge girl"
+            },
+            {
+                name: "Low-to-Moderate Exercise (stress reduction)",
+                direction: "boy",
+                evidence: "★★☆☆",
+                description: "Lower maternal cortisol is associated with male-biased sex ratios. Regular low-to-moderate intensity exercise (150-200 min/week at ~40% VO2 max—a brisk walk where you can talk but not sing), yoga, Pilates, tai chi, meditation, adequate sleep (7-9 hours), and time in nature all lower baseline cortisol.",
+                mechanism: "Fragile male hypothesis: male fetuses may be more vulnerable to stress hormones. Lowering cortisol through gentle exercise and mind-body practices may reduce male fetal loss. The mechanism is robust across studies; the nudge strategy is health-compatible.",
+                directionLabel: "Nudge boy"
+            },
+            {
+                name: "High-Intensity Exercise (healthy stress)",
+                direction: "girl",
+                evidence: "★★☆☆",
+                description: "Higher maternal cortisol is fairly consistently associated with female-biased sex ratios. HIIT workouts, vigorous training at 60-80% VO2 max, training for athletic events, or taking on cognitively demanding challenges can elevate cortisol within healthy ranges (eustress, not chronic distress).",
+                mechanism: "Fragile male hypothesis: elevated cortisol may increase male fetal loss, shifting ratios toward girls. The key is positive, growth-oriented challenge (training for a marathon) rather than chronic harmful stress. A woman training hard while TTC isn't suffering—she's strategically using intensity.",
+                directionLabel: "Nudge girl"
+            },
+            {
+                name: "Partner Proximity / Cohabitation",
+                direction: "boy",
+                evidence: "★★☆☆",
+                description: "Some evidence suggests that women living with their partners (especially in stable relationships) are more likely to have boys. The mechanism is unclear and this is obviously not a practical nudge.",
+                mechanism: "Could relate to stress levels, coital frequency, or other unmeasured factors. Tracking this helps control for confounding rather than providing a nudge.",
+                directionLabel: "Nudge boy"
             },
             {
                 name: "Iron & Meat Intake",
                 direction: "boy",
                 evidence: "★★☆☆",
-                description: "Limited evidence suggests that higher iron intake and higher meat consumption may be associated with male-biased sex ratios. This could relate to overall nutritional status or specific micronutrient effects.",
-                mechanism: "Iron-rich diets may signal maternal health and resource availability, fitting the Trivers-Willard framework. Alternatively, iron or other components of meat might influence the intrauterine environment in ways that favor male conception or viability.",
-                directionLabel: "May favor boys"
+                description: "Higher iron intake and meat consumption show associations with male-biased sex ratios. However, this is confounded by inflammation: women with autoimmune conditions or inflammation may have both lower iron AND higher male fetal loss, creating spurious correlations.",
+                mechanism: "May signal maternal health/resources per Trivers-Willard. But inflammation confound is serious—see blog DAGs. Don't avoid iron for health reasons to chase gender outcomes.",
+                directionLabel: "Nudge boy (confounded)"
             },
             {
-                name: "Breakfast Calories",
-                direction: "boy",
+                name: "Vegetarian/Vegan Diet",
+                direction: "girl",
                 evidence: "★★☆☆",
-                description: "A few studies (notably one from 2008) found that women who ate breakfast regularly and consumed more calories at breakfast were more likely to have male babies. This is often called the 'breakfast effect,' though replication is limited.",
-                mechanism: "Unclear, but possibly related to glucose availability or metabolic signaling around conception. Could overlap with the general caloric intake hypothesis but with a timing component. Highly speculative.",
-                directionLabel: "May favor boys"
+                description: "Hudson & Buckley 2000 found vegetarian women had strikingly skewed sex ratios: 81.5 boys per 100 girls vs the standard 106:100. That's a 23% reduction in male births. However, this could reflect nutritional stress causing male fetal loss rather than a positive girl-selection mechanism.",
+                mechanism: "May work through lower caloric density, different mineral balance (more Ca/Mg, less Na/K), or nutritional stress triggering differential male fetal loss. If it's the latter, it's ethically concerning as a deliberate strategy.",
+                directionLabel: "Nudge girl (caution)"
+            },
+            {
+                name: "Timing Relative to Ovulation",
+                direction: "unclear",
+                evidence: "★☆☆☆",
+                description: "The Shettles method suggested timing matters. However, the proposed mechanism (Y-sperm swim faster) has been definitively debunked by modern microscopy—no morphological or motility differences exist between X and Y sperm. Some studies still find timing associations, but without a plausible mechanism.",
+                mechanism: "Original Shettles hypothesis is dead. If timing matters at all, it might work through glucose levels at conception, cervical mucus quality, or egg-side selection (Grant hypothesis)—but this is highly speculative.",
+                directionLabel: "Contested"
             }
         ];
 
@@ -389,11 +453,11 @@
             let headerText = '';
 
             if (goal === 'boy') {
-                filteredFactors = factors.filter(f => f.direction === 'boy' || f.direction === 'mixed');
-                headerText = '<h2 style="color: #1976d2; margin-bottom: 20px;">Factors that may favor male births (or are unclear)</h2>';
+                filteredFactors = factors.filter(f => f.direction === 'boy' || f.direction === 'mixed' || f.direction === 'unclear');
+                headerText = '<h2 style="color: #1976d2; margin-bottom: 20px;">Factors that may nudge toward boys (or are unclear)</h2>';
             } else if (goal === 'girl') {
-                filteredFactors = factors.filter(f => f.direction === 'girl' || f.direction === 'mixed');
-                headerText = '<h2 style="color: #c2185b; margin-bottom: 20px;">Factors that may favor female births (or are unclear)</h2>';
+                filteredFactors = factors.filter(f => f.direction === 'girl' || f.direction === 'mixed' || f.direction === 'unclear');
+                headerText = '<h2 style="color: #c2185b; margin-bottom: 20px;">Factors that may nudge toward girls (or are unclear)</h2>';
             } else {
                 headerText = '<h2 style="color: #667eea; margin-bottom: 20px;">All factors under investigation</h2>';
             }
