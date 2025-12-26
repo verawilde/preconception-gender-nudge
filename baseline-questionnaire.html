@@ -563,6 +563,9 @@
                     <p style="margin-top: 1.5rem; color: var(--soft-gray); font-size: 0.9rem;">
                         Already have an account? <a href="#" onclick="signIn()" style="color: var(--sage-dark);">Sign in</a>
                     </p>
+                    <p style="margin-top: 0.75rem; color: var(--soft-gray); font-size: 0.9rem;">
+                        <a href="#" onclick="resetPassword()" style="color: var(--sage-dark);">Forgot password?</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -1482,7 +1485,7 @@
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
         import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 
         // Firebase config from your project
@@ -1553,6 +1556,28 @@
                 currentUser = userCredential.user;
                 errorEl.style.display = 'none';
             } catch (error) {
+                errorEl.textContent = error.message;
+                errorEl.style.display = 'block';
+            }
+        };
+
+        window.resetPassword = async function() {
+            const email = document.getElementById('email').value;
+            const errorEl = document.getElementById('authError');
+
+            if (!email) {
+                errorEl.textContent = 'Please enter your email address first';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            try {
+                await sendPasswordResetEmail(auth, email);
+                errorEl.style.color = 'var(--sage)';
+                errorEl.textContent = 'Password reset email sent! Check your inbox.';
+                errorEl.style.display = 'block';
+            } catch (error) {
+                errorEl.style.color = 'var(--terracotta)';
                 errorEl.textContent = error.message;
                 errorEl.style.display = 'block';
             }
