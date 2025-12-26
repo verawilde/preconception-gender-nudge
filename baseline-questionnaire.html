@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conceptual - Baseline Questionnaire</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FDF8F3;
+            --warm-white: #FFFCF9;
+            --sage: #8B9A7D;
+            --sage-light: #C5D1BC;
+            --sage-dark: #5C6B52;
+            --terracotta: #C4846C;
+            --terracotta-light: #E8B9A5;
+            --charcoal: #2D2D2D;
+            --soft-gray: #6B6B6B;
+            --border: #E5DDD5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--charcoal);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--soft-gray);
+            font-style: italic;
+            font-family: 'Crimson Pro', serif;
+        }
+
+        .progress-bar {
+            background: var(--border);
+            height: 4px;
+            border-radius: 2px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--sage), var(--terracotta));
+            height: 100%;
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 2px;
+        }
+
+        .section {
+            background: var(--warm-white);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--sage-dark);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: linear-gradient(180deg, var(--sage), var(--terracotta));
+            border-radius: 2px;
+        }
+
+        .section-desc {
+            color: var(--soft-gray);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            padding-left: 1.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--charcoal);
+        }
+
+        .label-hint {
+            font-weight: 400;
+            font-size: 0.85rem;
+            color: var(--soft-gray);
+            display: block;
+            margin-top: 0.25rem;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            background: var(--cream);
+            color: var(--charcoal);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--sage);
+            box-shadow: 0 0 0 3px var(--sage-light);
+        }
+
+        input[type="number"] {
+            max-width: 120px;
+        }
+
+        .inline-number {
+            max-width: 80px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .radio-option,
+        .checkbox-option {
+            position: relative;
+        }
+
+        .radio-option input,
+        .checkbox-option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .radio-label,
+        .checkbox-label {
+            display: inline-block;
+            padding: 0.625rem 1.25rem;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            background: var(--cream);
+        }
+
+        .radio-option input:checked + .radio-label,
+        .checkbox-option input:checked + .checkbox-label {
+            background: var(--sage);
+            border-color: var(--sage);
+            color: white;
+        }
+
+        .radio-option input:focus + .radio-label,
+        .checkbox-option input:focus + .checkbox-label {
+            box-shadow: 0 0 0 3px var(--sage-light);
+        }
+
+        .scale-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .scale-label {
+            font-size: 0.85rem;
+            color: var(--soft-gray);
+            min-width: 60px;
+        }
+
+        .scale-label:last-child {
+            text-align: right;
+        }
+
+        .scale-options {
+            display: flex;
+            gap: 0.25rem;
+            flex: 1;
+            justify-content: space-between;
+        }
+
+        .scale-option input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .scale-option {
+            position: relative;
+        }
+
+        .scale-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--cream);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .scale-option input:checked + .scale-btn {
+            background: var(--sage);
+            border-color: var(--sage);
+            color: white;
+        }
+
+        .scale-option input:focus + .scale-btn {
+            box-shadow: 0 0 0 3px var(--sage-light);
+        }
+
+        .frequency-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .frequency-item:last-child {
+            border-bottom: none;
+        }
+
+        .frequency-label {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+
+        .frequency-input {
+            width: 70px;
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        .frequency-unit {
+            font-size: 0.85rem;
+            color: var(--soft-gray);
+            margin-left: 0.5rem;
+            min-width: 80px;
+        }
+
+        .subsection {
+            background: var(--cream);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .subsection-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--sage-dark);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--soft-gray);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--sage);
+            color: var(--sage-dark);
+        }
+
+        .btn-primary {
+            background: var(--sage);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--sage-dark);
+        }
+
+        .btn-primary:disabled {
+            background: var(--border);
+            cursor: not-allowed;
+        }
+
+        .goal-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .goal-card {
+            position: relative;
+        }
+
+        .goal-card input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .goal-card-label {
+            display: block;
+            padding: 2rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--cream);
+        }
+
+        .goal-card input:checked + .goal-card-label {
+            border-color: var(--sage);
+            background: linear-gradient(135deg, var(--sage-light) 0%, var(--cream) 100%);
+        }
+
+        .goal-card input:focus + .goal-card-label {
+            box-shadow: 0 0 0 3px var(--sage-light);
+        }
+
+        .goal-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .goal-text {
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+
+        .children-entry {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .auth-section {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .auth-section h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .auth-form {
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .auth-form .form-group {
+            text-align: left;
+        }
+
+        .auth-form input {
+            max-width: 100%;
+        }
+
+        .error-message {
+            color: var(--terracotta);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--sage);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--sage-light);
+            color: var(--sage-dark);
+            border-radius: 50%;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+
+            .goal-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .frequency-item {
+                flex-wrap: wrap;
+            }
+
+            .frequency-unit {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 0.25rem;
+            }
+
+            .scale-options {
+                justify-content: flex-start;
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Conceptual</h1>
+            <p class="subtitle">Preconception Gender Nudge — Baseline Questionnaire</p>
+        </header>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <!-- Section 0: Auth -->
+        <div class="section active" id="section-auth">
+            <div class="auth-section">
+                <h2>Create Your Account</h2>
+                <p style="color: var(--soft-gray); margin-bottom: 2rem;">Your data is stored securely and never shared.</p>
+                <div class="auth-form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" required>
+                        <span class="label-hint">At least 6 characters</span>
+                    </div>
+                    <div id="authError" class="error-message" style="display: none;"></div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="signUp()">Create Account</button>
+                    <p style="margin-top: 1.5rem; color: var(--soft-gray); font-size: 0.9rem;">
+                        Already have an account? <a href="#" onclick="signIn()" style="color: var(--sage-dark);">Sign in</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1: Goal -->
+        <div class="section" id="section-1">
+            <h2 class="section-title"><span class="section-number">1</span> Your Goal</h2>
+            <p class="section-desc">Which gender would you like to nudge toward?</p>
+            
+            <div class="goal-cards">
+                <div class="goal-card">
+                    <input type="radio" name="goal" id="goal-boy" value="boy">
+                    <label for="goal-boy" class="goal-card-label">
+                        <div class="goal-icon">👦</div>
+                        <div class="goal-text">Boy</div>
+                    </label>
+                </div>
+                <div class="goal-card">
+                    <input type="radio" name="goal" id="goal-girl" value="girl">
+                    <label for="goal-girl" class="goal-card-label">
+                        <div class="goal-icon">👧</div>
+                        <div class="goal-text">Girl</div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <div></div>
+                <button class="btn btn-primary" onclick="nextSection()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Section 2: Demographics -->
+        <div class="section" id="section-2">
+            <h2 class="section-title"><span class="section-number">2</span> Demographics</h2>
+            
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" min="18" max="55" placeholder="e.g. 32">
+            </div>
+
+            <div class="form-group">
+                <label>Previous children</label>
+                <span class="label-hint">Enter number and genders</span>
+                <div style="margin-top: 0.75rem;">
+                    <input type="number" id="numChildren" min="0" max="20" placeholder="0" class="inline-number" onchange="updateChildrenInputs()">
+                    <span style="color: var(--soft-gray); margin-left: 0.5rem;">children</span>
+                </div>
+                <div id="childrenGenders" style="margin-top: 1rem;"></div>
+            </div>
+
+            <div class="subsection">
+                <div class="subsection-title">Socioeconomic Background</div>
+                
+                <div class="form-group">
+                    <label for="education">Highest education level</label>
+                    <select id="education">
+                        <option value="">Select...</option>
+                        <option value="less-than-high-school">Less than high school</option>
+                        <option value="high-school">High school</option>
+                        <option value="some-college">Some college</option>
+                        <option value="bachelors">Bachelor's degree</option>
+                        <option value="graduate">Graduate degree</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="income">Household income (optional)</label>
+                    <select id="income">
+                        <option value="">Prefer not to say</option>
+                        <option value="under-30k">&lt; $30,000</option>
+                        <option value="30-60k">$30,000 - $60,000</option>
+                        <option value="60-100k">$60,000 - $100,000</option>
+                        <option value="100-150k">$100,000 - $150,000</option>
+                        <option value="over-150k">&gt; $150,000</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="employment">Employment status</label>
+                    <select id="employment">
+                        <option value="">Select...</option>
+                        <option value="full-time">Full-time</option>
+                        <option value="part-time">Part-time</option>
+                        <option value="self-employed">Self-employed</option>
+                        <option value="unemployed">Unemployed</option>
+                        <option value="student">Student</option>
+                        <option value="homemaker">Homemaker</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="prevSection()">Back</button>
+                <button class="btn btn-primary" onclick="nextSection()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Section 3: Cycle & Fertility -->
+        <div class="section" id="section-3">
+            <h2 class="section-title"><span class="section-number">3</span> Cycle & Fertility</h2>
+            
+            <div class="form-group">
+                <label for="cycleLength">Typical cycle length</label>
+                <input type="number" id="cycleLength" min="20" max="45" placeholder="28"> <span style="color: var(--soft-gray);">days</span>
+            </div>
+
+            <div class="form-group">
+                <label for="cycleVariation">How much does your cycle vary month to month?</label>
+                <span class="label-hint">e.g., if your cycle is usually 28 days but sometimes 26-30, enter 2</span>
+                <input type="number" id="cycleVariation" min="0" max="14" placeholder="2"> <span style="color: var(--soft-gray);">days variation (±)</span>
+            </div>
+
+            <div class="form-group">
+                <label for="periodLength">Typical period length</label>
+                <input type="number" id="periodLength" min="1" max="14" placeholder="5"> <span style="color: var(--soft-gray);">days</span>
+            </div>
+
+            <div class="form-group">
+                <label>Do you track ovulation?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="tracksOvulation" id="tracks-yes" value="yes">
+                        <label for="tracks-yes" class="radio-label">Yes</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="tracksOvulation" id="tracks-no" value="no">
+                        <label for="tracks-no" class="radio-label">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" id="ovulationMethodGroup" style="display: none;">
+                <label>Tracking method(s)</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="method-temp" value="temp">
+                        <label for="method-temp" class="checkbox-label">Temperature</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="method-opk" value="opk">
+                        <label for="method-opk" class="checkbox-label">OPK strips</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="method-mucus" value="mucus">
+                        <label for="method-mucus" class="checkbox-label">Cervical mucus</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="method-app" value="app">
+                        <label for="method-app" class="checkbox-label">App prediction</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="prevSection()">Back</button>
+                <button class="btn btn-primary" onclick="nextSection()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Section 4: Living Situation -->
+        <div class="section" id="section-4">
+            <h2 class="section-title"><span class="section-number">4</span> Living Situation & Partner</h2>
+            
+            <div class="form-group">
+                <label>Do you live with your partner?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="livesWithPartner" id="lives-yes" value="yes">
+                        <label for="lives-yes" class="radio-label">Yes</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="livesWithPartner" id="lives-no" value="no">
+                        <label for="lives-no" class="radio-label">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="partnerNights">In a typical month, how many nights is your partner home?</label>
+                <input type="number" id="partnerNights" min="0" max="31" placeholder="30"> <span style="color: var(--soft-gray);">nights / month</span>
+            </div>
+
+            <div class="form-group">
+                <label for="partnerDays">In a typical month, how many days do you see your partner during daytime?</label>
+                <input type="number" id="partnerDays" min="0" max="31" placeholder="20"> <span style="color: var(--soft-gray);">days / month</span>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="prevSection()">Back</button>
+                <button class="btn btn-primary" onclick="nextSection()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Section 5: Health -->
+        <div class="section" id="section-5">
+            <h2 class="section-title"><span class="section-number">5</span> Health & Medical History</h2>
+            
+            <div class="form-group">
+                <label>Do you have any inflammatory or autoimmune conditions?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="inflammatory" id="inflammatory-yes" value="yes">
+                        <label for="inflammatory-yes" class="radio-label">Yes</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="inflammatory" id="inflammatory-no" value="no">
+                        <label for="inflammatory-no" class="radio-label">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" id="inflammatoryDetailGroup" style="display: none;">
+                <label for="inflammatoryDetail">Please specify (optional)</label>
+                <input type="text" id="inflammatoryDetail" placeholder="e.g., Hashimoto's, rheumatoid arthritis">
+            </div>
+
+            <div class="form-group">
+                <label for="pregnancyLoss">History of pregnancy loss</label>
+                <span class="label-hint">Number of miscarriages or pregnancy losses</span>
+                <input type="number" id="pregnancyLoss" min="0" max="20" placeholder="0">
+            </div>
+
+            <div class="form-group">
+                <label>Currently taking prenatal vitamins?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="prenatalVitamins" id="prenatal-yes" value="yes">
+                        <label for="prenatal-yes" class="radio-label">Yes</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="prenatalVitamins" id="prenatal-no" value="no">
+                        <label for="prenatal-no" class="radio-label">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Currently taking iron supplements (separate from prenatal)?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="ironSupplements" id="iron-yes" value="yes">
+                        <label for="iron-yes" class="radio-label">Yes</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="ironSupplements" id="iron-no" value="no">
+                        <label for="iron-no" class="radio-label">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="bloodSugar">Blood sugar status</label>
+                <select id="bloodSugar">
+                    <option value="none">None / Normal</option>
+                    <option value="prediabetic">Prediabetic</option>
+                    <option value="diabetic">Diabetic</option>
+                    <option value="pcos">PCOS</option>
+                    <option value="gestational-past">Gestational diabetes in past pregnancy</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="prevSection()">Back</button>
+                <button class="btn btn-primary" onclick="nextSection()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Section 6: Stress & Mental Health -->
+        <div class="section" id="section-6">
+            <h2 class="section-title"><span class="section-number">6</span> Stress & Mental Health</h2>
+            
+            <div class="form-group">
+                <label>Do you have a psychiatric diagnosis or ongoing mental health condition that affects your stress levels?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="mentalHealth" id="mental-yes" value="yes">
+                        <label for="mental-yes" class="radio-label">Yes</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="mentalHealth" id="mental-no" value="no">
+                        <label for="mental-no" class="radio-label">No</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="mentalHealth" id="mental-pnts" value="prefer-not-to-say">
+                        <label for="mental-pnts" class="radio-label">Prefer not to say</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" id="mentalHealthDetailGroup" style="display: none;">
+                <label for="mentalHealthDetail">Please specify (optional)</label>
+                <input type="text" id="mentalHealthDetail" placeholder="e.g., anxiety, depression, PTSD">
+            </div>
+
+            <div class="form-group">
+                <label>Overall stress level (past month)</label>
+                <div class="scale-group">
+                    <span class="scale-label">Low</span>
+                    <div class="scale-options">
+                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `
+                        <div class="scale-option">
+                            <input type="radio" name="overallStress" id="stress-${n}" value="${n}">
+                            <label for="stress-${n}" class="scale-btn">${n}</label>
+                        </div>`).join('')}
+                    </div>
+                    <span class="scale-label">High</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Work/career stress</label>
+                <div class="scale-group">
+                    <span class="scale-label">Low</span>
+                    <div class="scale-options">
+                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `
+                        <div class="scale-option">
+                            <input type="radio" name="workStress" id="work-stress-${n}" value="${n}">
+                            <label for="work-stress-${n}" class="scale-btn">${n}</label>
+                        </div>`).join('')}
+                    </div>
+                    <span class="scale-label">High</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Relationship stress</label>
+                <div class="scale-group">
+                    <span class="scale-label">Low</span>
+                    <div class="scale-options">
+                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `
+                        <div class="scale-option">
+                            <input type="radio" name="relationshipStress" id="rel-stress-${n}" value="${n}">
+                            <label for="rel-stress-${n}" class="scale-btn">${n}</label>
+                        </div>`).join('')}
+                    </div>
+                    <span class="scale-label">High</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Financial stress</label>
+                <div class="scale-group">
+                    <span class="scale-label">Low</span>
+                    <div class="scale-options">
+                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `
+                        <div class="scale-option">
+                            <input type="radio" name="financialStress" id="fin-stress-${n}" value="${n}">
+                            <label for="fin-stress-${n}" class="scale-btn">${n}</label>
+                        </div>`).join('')}
+                    </div>
+                    <span class="scale-label">High</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>How often do you feel overwhelmed?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="overwhelmed" id="overwhelmed-never" value="never">
+                        <label for="overwhelmed-never" class="radio-label">Never</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="overwhelmed" id="overwhelmed-rarely" value="rarely">
+                        <label for="overwhelmed-rarely" class="radio-label">Rarely</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="overwhelmed" id="overwhelmed-sometimes" value="sometimes">
+                        <label for="overwhelmed-sometimes" class="radio-label">Sometimes</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="overwhelmed" id="overwhelmed-often" value="often">
+                        <label for="overwhelmed-often" class="radio-label">Often</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="overwhelmed" id="overwhelmed-daily" value="daily">
+                        <label for="overwhelmed-daily" class="radio-label">Daily</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="prevSection()">Back</button>
+                <button class="btn btn-primary" onclick="nextSection()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Section 7: Sleep -->
+        <div class="section" id="section-7">
+            <h2 class="section-title"><span class="section-number">7</span> Sleep</h2>
+            
+            <div class="form-group">
+                <label for="sleepHours">Average hours of sleep per night</label>
+                <input type="number" id="sleepHours" min="0" max="14" step="0.5" placeholder="7"> <span style="color: var(--soft-gray);">hours</span>
+            </div>
+
+            <div class="form-group">
+                <label>Sleep quality (past month)</label>
+                <div class="scale-group">
+                    <span class="scale-label">Poor</span>
+                    <div class="scale-options">
+                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `
+                        <div class="scale-option">
+                            <input type="radio" name="sleepQuality" id="sleep-qual-${n}" value="${n}">
+                            <label for="sleep-qual-${n}" class="scale-btn">${n}</label>
+                        </div>`).join('')}
+                    </div>
+                    <span class="scale-label">Excellent</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>How often is your sleep interrupted/broken?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="sleepInterrupted" id="interrupted-never" value="never">
+                        <label for="interrupted-never" class="radio-label">Never</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="sleepInterrupted" id="interrupted-rarely" value="rarely">
+                        <label for="interrupted-rarely" class="radio-label">Rarely</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="sleepInterrupted" id="interrupted-sometimes" value="sometimes">
+                        <label for="interrupted-sometimes" class="radio-label">Sometimes</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="sleepInterrupted" id="interrupted-often" value="often">
+                        <label for="interrupted-often" class="radio-label">Often</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="sleepInterrupted" id="interrupted-every" value="every-night">
+                        <label for="interrupted-every" class="radio-label">Every night</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>How often do you wake up and have difficulty falling back asleep?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="sleepDifficulty" id="difficulty-never" value="never">
+                        <label for="difficulty-never" class="radio-label">Never</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="sleepDifficulty" id="difficulty-rarely" value="rarely">
+                        <label for="difficulty-rarely" class="radio-label">Rarely</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="sleepDifficulty" id="difficulty-sometimes" value="sometimes">
+                        <label for="difficulty-sometimes" class="radio-label">Sometimes</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="sleepDifficulty" id="difficulty-often" value="often">
+                        <label for="difficulty-often" class="radio-label">Often</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="sleepDifficulty" id="difficulty-every" value="every-night">
+                        <label for="difficulty-every" class="radio-label">Every night</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="prevSection()">Back</button>
+                <button class="btn btn-primary" onclick="nextSection()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Section 8: Exercise -->
+        <div class="section" id="section-8">
+            <h2 class="section-title"><span class="section-number">8</span> Exercise</h2>
+            
+            <div class="form-group">
+                <label for="moderateExercise">Moderate exercise</label>
+                <span class="label-hint">Brisk walking, light cycling, yoga</span>
+                <input type="number" id="moderateExercise" min="0" max="40" step="0.5" placeholder="3"> <span style="color: var(--soft-gray);">hours per week</span>
+            </div>
+
+            <div class="form-group">
+                <label for="vigorousExercise">Vigorous exercise</label>
+                <span class="label-hint">Running, HIIT, heavy weights, competitive sports</span>
+                <input type="number" id="vigorousExercise" min="0" max="40" step="0.5" placeholder="1"> <span style="color: var(--soft-gray);">hours per week</span>
+            </div>
+
+            <div class="form-group">
+                <label>Current fitness level</label>
+                <div class="scale-group">
+                    <span class="scale-label">Low</span>
+                    <div class="scale-options">
+                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `
+                        <div class="scale-option">
+                            <input type="radio" name="fitnessLevel" id="fitness-${n}" value="${n}">
+                            <label for="fitness-${n}" class="scale-btn">${n}</label>
+                        </div>`).join('')}
+                    </div>
+                    <span class="scale-label">High</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>How challenging/stressful is your current exercise routine for you?</label>
+                <span class="label-hint">How hard does it feel, not how hard it objectively is</span>
+                <div class="scale-group">
+                    <span class="scale-label">Easy</span>
+                    <div class="scale-options">
+                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `
+                        <div class="scale-option">
+                            <input type="radio" name="exerciseChallenge" id="challenge-${n}" value="${n}">
+                            <label for="challenge-${n}" class="scale-btn">${n}</label>
+                        </div>`).join('')}
+                    </div>
+                    <span class="scale-label">Very demanding</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="restingHR">Resting heart rate (optional)</label>
+                <span class="label-hint">If you know it</span>
+                <input type="number" id="restingHR" min="40" max="120" placeholder="70"> <span style="color: var(--soft-gray);">bpm</span>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="prevSection()">Back</button>
+                <button class="btn btn-primary" onclick="nextSection()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Section 9: Eating Patterns -->
+        <div class="section" id="section-9">
+            <h2 class="section-title"><span class="section-number">9</span> Caloric & Eating Patterns</h2>
+            
+            <div class="form-group">
+                <label>Typical breakfast calories</label>
+                <span class="label-hint">Enter a number OR select a range</span>
+                <div style="margin-top: 0.75rem;">
+                    <input type="number" id="breakfastCalories" min="0" max="2000" placeholder="e.g. 400"> <span style="color: var(--soft-gray);">calories</span>
+                </div>
+                <div class="radio-group" style="margin-top: 0.75rem;">
+                    <div class="radio-option">
+                        <input type="radio" name="breakfastRange" id="bfast-none" value="none">
+                        <label for="bfast-none" class="radio-label">Skip breakfast</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="breakfastRange" id="bfast-light" value="light">
+                        <label for="bfast-light" class="radio-label">&lt;200</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="breakfastRange" id="bfast-moderate" value="moderate">
+                        <label for="bfast-moderate" class="radio-label">200-400</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="breakfastRange" id="bfast-substantial" value="substantial">
+                        <label for="bfast-substantial" class="radio-label">400-600</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="breakfastRange" id="bfast-large" value="large">
+                        <label for="bfast-large" class="radio-label">600+</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Overall daily caloric intake</label>
+                <span class="label-hint">Enter a number OR select a description</span>
+                <div style="margin-top: 0.75rem;">
+                    <input type="number" id="dailyCalories" min="0" max="5000" placeholder="e.g. 2000"> <span style="color: var(--soft-gray);">calories</span>
+                </div>
+                <div class="radio-group" style="margin-top: 0.75rem;">
+                    <div class="radio-option">
+                        <input type="radio" name="dailyRange" id="daily-restricted" value="restricted">
+                        <label for="daily-restricted" class="radio-label">Restricted/dieting</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="dailyRange" id="daily-light" value="light">
+                        <label for="daily-light" class="radio-label">Light</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="dailyRange" id="daily-moderate" value="moderate">
+                        <label for="daily-moderate" class="radio-label">Moderate</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="dailyRange" id="daily-generous" value="generous">
+                        <label for="daily-generous" class="radio-label">Generous</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="dailyRange" id="daily-very-high" value="very-high">
+                        <label for="daily-very-high" class="radio-label">Very high</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Are you currently trying to change your weight?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="weightGoal" id="weight-lose" value="lose">
+                        <label for="weight-lose" class="radio-label">Lose weight</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="weightGoal" id="weight-gain" value="gain">
+                        <label for="weight-gain" class="radio-label">Gain weight</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="weightGoal" id="weight-maintain" value="maintain">
+                        <label for="weight-maintain" class="radio-label">Maintain</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="weightGoal" id="weight-not-tracking" value="not-tracking">
+                        <label for="weight-not-tracking" class="radio-label">Not tracking</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="prevSection()">Back</button>
+                <button class="btn btn-primary" onclick="nextSection()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Section 10: Glycemic Patterns -->
+        <div class="section" id="section-10">
+            <h2 class="section-title"><span class="section-number">10</span> Glycemic Patterns</h2>
+            <p class="section-desc">How often do you eat these foods? (times per week)</p>
+            
+            <div class="frequency-item">
+                <span class="frequency-label">High-sugar foods (desserts, candy, sweetened drinks)</span>
+                <input type="number" class="frequency-input" id="highSugar" min="0" max="50" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">High-glycemic fruits (tropical fruits, grapes, watermelon)</span>
+                <input type="number" class="frequency-input" id="highGIFruit" min="0" max="50" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Low-glycemic foods (legumes, non-starchy vegetables)</span>
+                <input type="number" class="frequency-input" id="lowGI" min="0" max="50" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="prevSection()">Back</button>
+                <button class="btn btn-primary" onclick="nextSection()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Section 11: Meat & Heme Iron -->
+        <div class="section" id="section-11">
+            <h2 class="section-title"><span class="section-number">11</span> Meat & Heme Iron</h2>
+            <p class="section-desc">How often do you eat these foods? (times per week)</p>
+            
+            <div class="frequency-item">
+                <span class="frequency-label">Red meat (beef, lamb, pork)</span>
+                <input type="number" class="frequency-input" id="redMeat" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Poultry (chicken, turkey)</span>
+                <input type="number" class="frequency-input" id="poultry" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Fish and shellfish</span>
+                <input type="number" class="frequency-input" id="fishShellfish" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Eggs</span>
+                <input type="number" class="frequency-input" id="eggs" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="prevSection()">Back</button>
+                <button class="btn btn-primary" onclick="nextSection()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Section 12: Boy Minerals (Na/K) -->
+        <div class="section" id="section-12">
+            <h2 class="section-title"><span class="section-number">12</span> Boy Minerals: Sodium & Potassium Foods</h2>
+            <p class="section-desc">How often do you eat these foods? (times per week)</p>
+            
+            <div class="frequency-item">
+                <span class="frequency-label">Bananas</span>
+                <input type="number" class="frequency-input" id="bananas" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Potatoes</span>
+                <input type="number" class="frequency-input" id="potatoes" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Olives</span>
+                <input type="number" class="frequency-input" id="olives" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Anchovies / cured fish</span>
+                <input type="number" class="frequency-input" id="anchovies" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Smoked salmon</span>
+                <input type="number" class="frequency-input" id="smokedSalmon" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Cured/preserved meats (bacon, ham, salami)</span>
+                <input type="number" class="frequency-input" id="curedMeats" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Salty cheeses (blue, feta, parmesan)</span>
+                <input type="number" class="frequency-input" id="saltyCheese" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Shrimp/shellfish</span>
+                <input type="number" class="frequency-input" id="shrimp" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Processed bread/pastries</span>
+                <input type="number" class="frequency-input" id="processedBread" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Breakfast cereals</span>
+                <input type="number" class="frequency-input" id="cereals" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="form-group" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+                <label>Are your cereals typically fortified (e.g., with B vitamins, iron)?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="cerealFortified" id="cereal-fort-yes" value="yes">
+                        <label for="cereal-fort-yes" class="radio-label">Yes</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="cerealFortified" id="cereal-fort-no" value="no">
+                        <label for="cereal-fort-no" class="radio-label">No</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="cerealFortified" id="cereal-fort-dk" value="dont-know">
+                        <label for="cereal-fort-dk" class="radio-label">Don't know</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Miso / soy sauce</span>
+                <input type="number" class="frequency-input" id="miso" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="form-group" style="margin-top: 1.5rem;">
+                <label>How heavily do you use salt or salty flavorings/sauces?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="saltUse" id="salt-never" value="never">
+                        <label for="salt-never" class="radio-label">Never</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="saltUse" id="salt-lightly" value="lightly">
+                        <label for="salt-lightly" class="radio-label">Lightly</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="saltUse" id="salt-moderately" value="moderately">
+                        <label for="salt-moderately" class="radio-label">Moderately</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="saltUse" id="salt-heavily" value="heavily">
+                        <label for="salt-heavily" class="radio-label">Heavily</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="saltUse" id="salt-very-heavily" value="very-heavily">
+                        <label for="salt-very-heavily" class="radio-label">Very heavily</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Do you add table salt to food after cooking?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="tableSalt" id="table-never" value="never">
+                        <label for="table-never" class="radio-label">Never</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="tableSalt" id="table-sometimes" value="sometimes">
+                        <label for="table-sometimes" class="radio-label">Sometimes</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="tableSalt" id="table-usually" value="usually">
+                        <label for="table-usually" class="radio-label">Usually</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="tableSalt" id="table-always" value="always">
+                        <label for="table-always" class="radio-label">Always</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="prevSection()">Back</button>
+                <button class="btn btn-primary" onclick="nextSection()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Section 13: Girl Minerals (Ca/Mg) -->
+        <div class="section" id="section-13">
+            <h2 class="section-title"><span class="section-number">13</span> Girl Minerals: Calcium & Magnesium Foods</h2>
+            <p class="section-desc">How often do you eat these foods? (times per week)</p>
+            
+            <div class="frequency-item">
+                <span class="frequency-label">Milk</span>
+                <input type="number" class="frequency-input" id="milk" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Yogurt</span>
+                <input type="number" class="frequency-input" id="yogurt" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Cheese (non-salty varieties)</span>
+                <input type="number" class="frequency-input" id="cheese" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Oatmeal</span>
+                <input type="number" class="frequency-input" id="oatmeal" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Leafy greens (spinach, kale, chard)</span>
+                <input type="number" class="frequency-input" id="leafyGreens" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Broccoli</span>
+                <input type="number" class="frequency-input" id="broccoli" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Nuts</span>
+                <input type="number" class="frequency-input" id="nuts" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Tofu/soy products</span>
+                <input type="number" class="frequency-input" id="tofu" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Chocolate/cocoa</span>
+                <input type="number" class="frequency-input" id="chocolate" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="frequency-item">
+                <span class="frequency-label">Oranges/citrus</span>
+                <input type="number" class="frequency-input" id="citrus" min="0" max="30" placeholder="0">
+                <span class="frequency-unit">× per week</span>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="prevSection()">Back</button>
+                <button class="btn btn-primary" onclick="submitBaseline()">Submit Baseline</button>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div class="loading" id="loadingState">
+            <div class="spinner"></div>
+            <p>Saving your baseline data...</p>
+        </div>
+
+        <!-- Success State -->
+        <div class="section" id="section-success" style="display: none;">
+            <div class="success-message">
+                <div class="success-icon">🌱</div>
+                <h2 style="font-family: 'Crimson Pro', serif; font-size: 2rem; margin-bottom: 1rem;">Baseline Complete!</h2>
+                <p style="color: var(--soft-gray); margin-bottom: 2rem;">Your baseline data has been saved. You're ready to start daily logging and receive personalized nudges.</p>
+                <button class="btn btn-primary" onclick="window.location.href='daily-log.html'">Start Daily Logging</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
+        import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+
+        // Firebase config from your project
+        const firebaseConfig = {
+            apiKey: "AIzaSyA0UHAuk4C22qlVSoKatVBl-218psfAzPA",
+            authDomain: "preconception-gender-nudge.firebaseapp.com",
+            projectId: "preconception-gender-nudge",
+            storageBucket: "preconception-gender-nudge.firebasestorage.app",
+            messagingSenderId: "1030213754440",
+            appId: "1:1030213754440:web:ddf1999e787d362eb0427d",
+            measurementId: "G-0W2MNFFYEW"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+
+        // Check auth state
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                // Check if user already has baseline
+                const baselineDoc = await getDoc(doc(db, 'users', user.uid, 'profile', 'baseline'));
+                if (baselineDoc.exists()) {
+                    // Already completed baseline, go to dashboard
+                    alert('You have already completed the baseline questionnaire!');
+                    // window.location.href = 'dashboard.html';
+                } else {
+                    // Show first section
+                    document.getElementById('section-auth').classList.remove('active');
+                    document.getElementById('section-1').classList.add('active');
+                    updateProgress();
+                }
+            }
+        });
+
+        // Make functions globally available
+        window.signUp = async function() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorEl = document.getElementById('authError');
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                currentUser = userCredential.user;
+                errorEl.style.display = 'none';
+            } catch (error) {
+                errorEl.textContent = error.message;
+                errorEl.style.display = 'block';
+            }
+        };
+
+        window.signIn = async function() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorEl = document.getElementById('authError');
+
+            if (!email || !password) {
+                errorEl.textContent = 'Please enter your email and password';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                currentUser = userCredential.user;
+                errorEl.style.display = 'none';
+            } catch (error) {
+                errorEl.textContent = error.message;
+                errorEl.style.display = 'block';
+            }
+        };
+
+        window.submitBaseline = async function() {
+            if (!currentUser) {
+                alert('Please sign in first');
+                return;
+            }
+
+            // Hide form, show loading
+            document.getElementById('section-13').classList.remove('active');
+            document.getElementById('loadingState').classList.add('active');
+
+            // Collect all data
+            const baseline = {
+                submittedAt: new Date().toISOString(),
+                
+                // Goal
+                goal: document.querySelector('input[name="goal"]:checked')?.value || null,
+                
+                // Demographics
+                age: parseInt(document.getElementById('age').value) || null,
+                numChildren: parseInt(document.getElementById('numChildren').value) || 0,
+                childrenGenders: collectChildrenGenders(),
+                education: document.getElementById('education').value || null,
+                income: document.getElementById('income').value || null,
+                employment: document.getElementById('employment').value || null,
+                
+                // Cycle
+                cycleLength: parseInt(document.getElementById('cycleLength').value) || null,
+                cycleVariation: parseInt(document.getElementById('cycleVariation').value) || null,
+                periodLength: parseInt(document.getElementById('periodLength').value) || null,
+                tracksOvulation: document.querySelector('input[name="tracksOvulation"]:checked')?.value || null,
+                ovulationMethods: collectOvulationMethods(),
+                
+                // Living situation
+                livesWithPartner: document.querySelector('input[name="livesWithPartner"]:checked')?.value || null,
+                partnerNights: parseInt(document.getElementById('partnerNights').value) || null,
+                partnerDays: parseInt(document.getElementById('partnerDays').value) || null,
+                
+                // Health
+                inflammatory: document.querySelector('input[name="inflammatory"]:checked')?.value || null,
+                inflammatoryDetail: document.getElementById('inflammatoryDetail').value || null,
+                pregnancyLoss: parseInt(document.getElementById('pregnancyLoss').value) || 0,
+                prenatalVitamins: document.querySelector('input[name="prenatalVitamins"]:checked')?.value || null,
+                ironSupplements: document.querySelector('input[name="ironSupplements"]:checked')?.value || null,
+                bloodSugar: document.getElementById('bloodSugar').value || null,
+                
+                // Mental health & stress
+                mentalHealth: document.querySelector('input[name="mentalHealth"]:checked')?.value || null,
+                mentalHealthDetail: document.getElementById('mentalHealthDetail').value || null,
+                overallStress: parseInt(document.querySelector('input[name="overallStress"]:checked')?.value) || null,
+                workStress: parseInt(document.querySelector('input[name="workStress"]:checked')?.value) || null,
+                relationshipStress: parseInt(document.querySelector('input[name="relationshipStress"]:checked')?.value) || null,
+                financialStress: parseInt(document.querySelector('input[name="financialStress"]:checked')?.value) || null,
+                overwhelmed: document.querySelector('input[name="overwhelmed"]:checked')?.value || null,
+                
+                // Sleep
+                sleepHours: parseFloat(document.getElementById('sleepHours').value) || null,
+                sleepQuality: parseInt(document.querySelector('input[name="sleepQuality"]:checked')?.value) || null,
+                sleepInterrupted: document.querySelector('input[name="sleepInterrupted"]:checked')?.value || null,
+                sleepDifficulty: document.querySelector('input[name="sleepDifficulty"]:checked')?.value || null,
+                
+                // Exercise
+                moderateExercise: parseFloat(document.getElementById('moderateExercise').value) || null,
+                vigorousExercise: parseFloat(document.getElementById('vigorousExercise').value) || null,
+                fitnessLevel: parseInt(document.querySelector('input[name="fitnessLevel"]:checked')?.value) || null,
+                exerciseChallenge: parseInt(document.querySelector('input[name="exerciseChallenge"]:checked')?.value) || null,
+                restingHR: parseInt(document.getElementById('restingHR').value) || null,
+                
+                // Eating patterns
+                breakfastCalories: parseInt(document.getElementById('breakfastCalories').value) || null,
+                breakfastRange: document.querySelector('input[name="breakfastRange"]:checked')?.value || null,
+                dailyCalories: parseInt(document.getElementById('dailyCalories').value) || null,
+                dailyRange: document.querySelector('input[name="dailyRange"]:checked')?.value || null,
+                weightGoal: document.querySelector('input[name="weightGoal"]:checked')?.value || null,
+                
+                // Glycemic
+                highSugar: parseInt(document.getElementById('highSugar').value) || 0,
+                highGIFruit: parseInt(document.getElementById('highGIFruit').value) || 0,
+                lowGI: parseInt(document.getElementById('lowGI').value) || 0,
+                
+                // Meat & heme iron
+                redMeat: parseInt(document.getElementById('redMeat').value) || 0,
+                poultry: parseInt(document.getElementById('poultry').value) || 0,
+                fishShellfish: parseInt(document.getElementById('fishShellfish').value) || 0,
+                eggs: parseInt(document.getElementById('eggs').value) || 0,
+                
+                // Boy minerals (Na/K)
+                bananas: parseInt(document.getElementById('bananas').value) || 0,
+                potatoes: parseInt(document.getElementById('potatoes').value) || 0,
+                olives: parseInt(document.getElementById('olives').value) || 0,
+                anchovies: parseInt(document.getElementById('anchovies').value) || 0,
+                smokedSalmon: parseInt(document.getElementById('smokedSalmon').value) || 0,
+                curedMeats: parseInt(document.getElementById('curedMeats').value) || 0,
+                saltyCheese: parseInt(document.getElementById('saltyCheese').value) || 0,
+                shrimp: parseInt(document.getElementById('shrimp').value) || 0,
+                processedBread: parseInt(document.getElementById('processedBread').value) || 0,
+                cereals: parseInt(document.getElementById('cereals').value) || 0,
+                cerealFortified: document.querySelector('input[name="cerealFortified"]:checked')?.value || null,
+                miso: parseInt(document.getElementById('miso').value) || 0,
+                saltUse: document.querySelector('input[name="saltUse"]:checked')?.value || null,
+                tableSalt: document.querySelector('input[name="tableSalt"]:checked')?.value || null,
+                
+                // Girl minerals (Ca/Mg)
+                milk: parseInt(document.getElementById('milk').value) || 0,
+                yogurt: parseInt(document.getElementById('yogurt').value) || 0,
+                cheese: parseInt(document.getElementById('cheese').value) || 0,
+                oatmeal: parseInt(document.getElementById('oatmeal').value) || 0,
+                leafyGreens: parseInt(document.getElementById('leafyGreens').value) || 0,
+                broccoli: parseInt(document.getElementById('broccoli').value) || 0,
+                nuts: parseInt(document.getElementById('nuts').value) || 0,
+                tofu: parseInt(document.getElementById('tofu').value) || 0,
+                chocolate: parseInt(document.getElementById('chocolate').value) || 0,
+                citrus: parseInt(document.getElementById('citrus').value) || 0
+            };
+
+            try {
+                await setDoc(doc(db, 'users', currentUser.uid, 'profile', 'baseline'), baseline);
+                document.getElementById('loadingState').classList.remove('active');
+                document.getElementById('section-success').style.display = 'block';
+                document.getElementById('progressFill').style.width = '100%';
+            } catch (error) {
+                console.error('Error saving baseline:', error);
+                alert('Error saving data. Please try again.');
+                document.getElementById('loadingState').classList.remove('active');
+                document.getElementById('section-13').classList.add('active');
+            }
+        };
+
+        function collectChildrenGenders() {
+            const genders = [];
+            const selects = document.querySelectorAll('#childrenGenders select');
+            selects.forEach(select => {
+                if (select.value) genders.push(select.value);
+            });
+            return genders;
+        }
+
+        function collectOvulationMethods() {
+            const methods = [];
+            document.querySelectorAll('#ovulationMethodGroup input[type="checkbox"]:checked').forEach(cb => {
+                methods.push(cb.value);
+            });
+            return methods;
+        }
+    </script>
+
+    <script>
+        let currentSection = 0;
+        const totalSections = 13;
+
+        function updateProgress() {
+            const progress = (currentSection / totalSections) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function nextSection() {
+            const currentEl = document.getElementById('section-' + (currentSection || 1));
+            currentEl.classList.remove('active');
+            currentSection++;
+            const nextEl = document.getElementById('section-' + currentSection);
+            if (nextEl) {
+                nextEl.classList.add('active');
+                updateProgress();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function prevSection() {
+            const currentEl = document.getElementById('section-' + currentSection);
+            currentEl.classList.remove('active');
+            currentSection--;
+            const prevEl = document.getElementById('section-' + currentSection);
+            if (prevEl) {
+                prevEl.classList.add('active');
+                updateProgress();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        window.updateChildrenInputs = function() {
+            const num = parseInt(document.getElementById('numChildren').value) || 0;
+            const container = document.getElementById('childrenGenders');
+            container.innerHTML = '';
+            
+            for (let i = 1; i <= num; i++) {
+                const div = document.createElement('div');
+                div.className = 'children-entry';
+                div.innerHTML = `
+                    <span>Child ${i}:</span>
+                    <select id="child-${i}-gender">
+                        <option value="">Select...</option>
+                        <option value="boy">Boy</option>
+                        <option value="girl">Girl</option>
+                    </select>
+                `;
+                container.appendChild(div);
+            }
+        };
+
+        // Toggle ovulation method group
+        document.querySelectorAll('input[name="tracksOvulation"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('ovulationMethodGroup').style.display = 
+                    this.value === 'yes' ? 'block' : 'none';
+            });
+        });
+
+        // Toggle inflammatory detail
+        document.querySelectorAll('input[name="inflammatory"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('inflammatoryDetailGroup').style.display = 
+                    this.value === 'yes' ? 'block' : 'none';
+            });
+        });
+
+        // Toggle mental health detail
+        document.querySelectorAll('input[name="mentalHealth"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('mentalHealthDetailGroup').style.display = 
+                    this.value === 'yes' ? 'block' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>
