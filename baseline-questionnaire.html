@@ -9,16 +9,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cream: #FDF8F3;
-            --warm-white: #FFFCF9;
-            --sage: #8B9A7D;
+            --cream: #FAFAF8;
+            --warm-white: #FFFFFF;
+            --sage: #6B8E7E;
             --sage-light: #C5D1BC;
-            --sage-dark: #5C6B52;
+            --sage-dark: #4A6B5D;
             --terracotta: #C4846C;
             --terracotta-light: #E8B9A5;
-            --charcoal: #2D2D2D;
-            --soft-gray: #6B6B6B;
-            --border: #E5DDD5;
+            --charcoal: #2E2E2E;
+            --soft-gray: #5A5A5A;
+            --border: #E0DDD8;
         }
 
         * {
@@ -83,8 +83,8 @@
         .section {
             background: var(--warm-white);
             border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
             border: 1px solid var(--border);
             display: none;
         }
@@ -121,8 +121,33 @@
         .section-desc {
             color: var(--soft-gray);
             font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            padding-left: 1.25rem;
+        }
+
+        .section-disclaimer {
+            color: var(--soft-gray);
+            font-size: 0.8rem;
+            font-style: italic;
             margin-bottom: 1.5rem;
             padding-left: 1.25rem;
+            opacity: 0.8;
+        }
+
+        .required {
+            color: var(--terracotta);
+            font-weight: normal;
+        }
+
+        .validation-error {
+            color: var(--terracotta);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .validation-error.show {
+            display: block;
         }
 
         .form-group {
@@ -371,7 +396,7 @@
         .goal-cards {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         .goal-card {
@@ -394,9 +419,34 @@
             background: var(--cream);
         }
 
-        .goal-card input:checked + .goal-card-label {
-            border-color: var(--sage);
-            background: linear-gradient(135deg, var(--sage-light) 0%, var(--cream) 100%);
+        .goal-label-boy {
+            border-color: #B8D4E8;
+        }
+
+        .goal-label-boy:hover {
+            border-color: #7EB5D6;
+            background: #F5FAFD;
+        }
+
+        .goal-label-girl {
+            border-color: #E8C4D4;
+        }
+
+        .goal-label-girl:hover {
+            border-color: #D6A0B8;
+            background: #FDF5F8;
+        }
+
+        .goal-card-boy input:checked + .goal-card-label {
+            border-color: #5B9BD5;
+            background: linear-gradient(135deg, #E8F2FB 0%, #F5FAFD 100%);
+            box-shadow: 0 0 0 3px rgba(91, 155, 213, 0.2);
+        }
+
+        .goal-card-girl input:checked + .goal-card-label {
+            border-color: #D5729B;
+            background: linear-gradient(135deg, #FBE8F0 0%, #FDF5F8 100%);
+            box-shadow: 0 0 0 3px rgba(213, 114, 155, 0.2);
         }
 
         .goal-card input:focus + .goal-card-label {
@@ -406,6 +456,15 @@
         .goal-icon {
             font-size: 2.5rem;
             margin-bottom: 0.75rem;
+            font-weight: 300;
+        }
+
+        .goal-label-boy .goal-icon {
+            color: #5B9BD5;
+        }
+
+        .goal-label-girl .goal-icon {
+            color: #D5729B;
         }
 
         .goal-text {
@@ -572,21 +631,22 @@
 
         <!-- Section 1: Goal -->
         <div class="section" id="section-1">
-            <h2 class="section-title"><span class="section-number">1</span> Your Goal</h2>
-            <p class="section-desc">Which gender would you like to nudge toward?</p>
+            <h2 class="section-title"><span class="section-number">1</span> My Goal</h2>
+            <p class="section-desc">If small biological nudges were possible, which outcome would you be curious about?</p>
+            <p class="section-disclaimer">This app synthesizes contested science to implement a prototype diet/lifestyle coach. It's not medical advice and doesn't promise anything.</p>
             
             <div class="goal-cards">
-                <div class="goal-card">
+                <div class="goal-card goal-card-boy">
                     <input type="radio" name="goal" id="goal-boy" value="boy">
-                    <label for="goal-boy" class="goal-card-label">
-                        <div class="goal-icon">👦</div>
+                    <label for="goal-boy" class="goal-card-label goal-label-boy">
+                        <div class="goal-icon">♂</div>
                         <div class="goal-text">Boy</div>
                     </label>
                 </div>
-                <div class="goal-card">
+                <div class="goal-card goal-card-girl">
                     <input type="radio" name="goal" id="goal-girl" value="girl">
-                    <label for="goal-girl" class="goal-card-label">
-                        <div class="goal-icon">👧</div>
+                    <label for="goal-girl" class="goal-card-label goal-label-girl">
+                        <div class="goal-icon">♀</div>
                         <div class="goal-text">Girl</div>
                     </label>
                 </div>
@@ -669,53 +729,44 @@
             <h2 class="section-title"><span class="section-number">3</span> Cycle & Fertility</h2>
             
             <div class="form-group">
-                <label for="cycleLength">Typical cycle length</label>
-                <input type="number" id="cycleLength" min="20" max="45" placeholder="28"> <span style="color: var(--soft-gray);">days</span>
+                <label for="cycleLength">Typical cycle length <span class="required">*</span></label>
+                <input type="number" id="cycleLength" min="20" max="45"> <span style="color: var(--soft-gray);">days</span>
             </div>
 
             <div class="form-group">
-                <label for="cycleVariation">How much does your cycle vary month to month?</label>
+                <label for="cycleVariation">How much does your cycle vary month to month? <span class="required">*</span></label>
                 <span class="label-hint">e.g., if your cycle is usually 28 days but sometimes 26-30, enter 2</span>
-                <input type="number" id="cycleVariation" min="0" max="14" placeholder="2"> <span style="color: var(--soft-gray);">days variation (±)</span>
+                <input type="number" id="cycleVariation" min="0" max="14"> <span style="color: var(--soft-gray);">days variation (±)</span>
             </div>
 
             <div class="form-group">
-                <label for="periodLength">Typical period length</label>
-                <input type="number" id="periodLength" min="1" max="14" placeholder="5"> <span style="color: var(--soft-gray);">days</span>
+                <label for="periodLength">Typical period length <span class="required">*</span></label>
+                <input type="number" id="periodLength" min="1" max="14"> <span style="color: var(--soft-gray);">days</span>
             </div>
 
             <div class="form-group">
-                <label>Do you track ovulation?</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" name="tracksOvulation" id="tracks-yes" value="yes">
-                        <label for="tracks-yes" class="radio-label">Yes</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" name="tracksOvulation" id="tracks-no" value="no">
-                        <label for="tracks-no" class="radio-label">No</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group" id="ovulationMethodGroup" style="display: none;">
-                <label>Tracking method(s)</label>
-                <div class="checkbox-group">
+                <label>How do you estimate ovulation timing? <span class="required">*</span></label>
+                <span class="label-hint">Select any that apply</span>
+                <div class="checkbox-group" style="flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
                     <div class="checkbox-option">
                         <input type="checkbox" id="method-temp" value="temp">
-                        <label for="method-temp" class="checkbox-label">Temperature</label>
+                        <label for="method-temp" class="checkbox-label">Basal body temperature</label>
                     </div>
                     <div class="checkbox-option">
                         <input type="checkbox" id="method-opk" value="opk">
-                        <label for="method-opk" class="checkbox-label">OPK strips</label>
+                        <label for="method-opk" class="checkbox-label">Ovulation test strips (LH/OPK)</label>
                     </div>
                     <div class="checkbox-option">
                         <input type="checkbox" id="method-mucus" value="mucus">
-                        <label for="method-mucus" class="checkbox-label">Cervical mucus</label>
+                        <label for="method-mucus" class="checkbox-label">Cervical mucus changes</label>
                     </div>
                     <div class="checkbox-option">
                         <input type="checkbox" id="method-app" value="app">
-                        <label for="method-app" class="checkbox-label">App prediction</label>
+                        <label for="method-app" class="checkbox-label">App or calendar prediction</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="method-none" value="none">
+                        <label for="method-none" class="checkbox-label">I don't track ovulation</label>
                     </div>
                 </div>
             </div>
@@ -746,12 +797,14 @@
 
             <div class="form-group">
                 <label for="partnerNights">In a typical month, how many nights is your partner home?</label>
-                <input type="number" id="partnerNights" min="0" max="31" placeholder="30"> <span style="color: var(--soft-gray);">nights / month</span>
+                <span class="label-hint">If this varies a lot, enter your best estimate.</span>
+                <input type="number" id="partnerNights" min="0" max="31"> <span style="color: var(--soft-gray);">nights / month</span>
             </div>
 
             <div class="form-group">
                 <label for="partnerDays">In a typical month, how many days do you see your partner during daytime?</label>
-                <input type="number" id="partnerDays" min="0" max="31" placeholder="20"> <span style="color: var(--soft-gray);">days / month</span>
+                <span class="label-hint">If this varies a lot, enter your best estimate.</span>
+                <input type="number" id="partnerDays" min="0" max="31"> <span style="color: var(--soft-gray);">days / month</span>
             </div>
 
             <div class="nav-buttons">
@@ -818,15 +871,34 @@
             </div>
 
             <div class="form-group">
-                <label for="bloodSugar">Blood sugar status</label>
-                <select id="bloodSugar">
-                    <option value="none">None / Normal</option>
-                    <option value="prediabetic">Prediabetic</option>
-                    <option value="diabetic">Diabetic</option>
-                    <option value="pcos">PCOS</option>
-                    <option value="gestational-past">Gestational diabetes in past pregnancy</option>
-                    <option value="other">Other</option>
-                </select>
+                <label>Have you ever been diagnosed with any of the following?</label>
+                <span class="label-hint">Select any that apply</span>
+                <div class="checkbox-group" style="flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="dx-prediabetes" value="prediabetes">
+                        <label for="dx-prediabetes" class="checkbox-label">Prediabetes / insulin resistance</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="dx-diabetes" value="diabetes">
+                        <label for="dx-diabetes" class="checkbox-label">Diabetes (Type 1 or Type 2)</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="dx-gestational" value="gestational">
+                        <label for="dx-gestational" class="checkbox-label">Gestational diabetes (past pregnancy)</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="dx-pcos" value="pcos">
+                        <label for="dx-pcos" class="checkbox-label">PCOS</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="dx-none" value="none">
+                        <label for="dx-none" class="checkbox-label">None of the above</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="dx-pnts" value="prefer-not-to-say">
+                        <label for="dx-pnts" class="checkbox-label">Prefer not to say</label>
+                    </div>
+                </div>
             </div>
 
             <div class="nav-buttons">
@@ -867,11 +939,16 @@
                 <div class="scale-group">
                     <span class="scale-label">Low</span>
                     <div class="scale-options">
-                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `
-                        <div class="scale-option">
-                            <input type="radio" name="overallStress" id="stress-${n}" value="${n}">
-                            <label for="stress-${n}" class="scale-btn">${n}</label>
-                        </div>`).join('')}
+                        <div class="scale-option"><input type="radio" name="overallStress" id="stress-1" value="1"><label for="stress-1" class="scale-btn">1</label></div>
+                        <div class="scale-option"><input type="radio" name="overallStress" id="stress-2" value="2"><label for="stress-2" class="scale-btn">2</label></div>
+                        <div class="scale-option"><input type="radio" name="overallStress" id="stress-3" value="3"><label for="stress-3" class="scale-btn">3</label></div>
+                        <div class="scale-option"><input type="radio" name="overallStress" id="stress-4" value="4"><label for="stress-4" class="scale-btn">4</label></div>
+                        <div class="scale-option"><input type="radio" name="overallStress" id="stress-5" value="5"><label for="stress-5" class="scale-btn">5</label></div>
+                        <div class="scale-option"><input type="radio" name="overallStress" id="stress-6" value="6"><label for="stress-6" class="scale-btn">6</label></div>
+                        <div class="scale-option"><input type="radio" name="overallStress" id="stress-7" value="7"><label for="stress-7" class="scale-btn">7</label></div>
+                        <div class="scale-option"><input type="radio" name="overallStress" id="stress-8" value="8"><label for="stress-8" class="scale-btn">8</label></div>
+                        <div class="scale-option"><input type="radio" name="overallStress" id="stress-9" value="9"><label for="stress-9" class="scale-btn">9</label></div>
+                        <div class="scale-option"><input type="radio" name="overallStress" id="stress-10" value="10"><label for="stress-10" class="scale-btn">10</label></div>
                     </div>
                     <span class="scale-label">High</span>
                 </div>
@@ -882,11 +959,16 @@
                 <div class="scale-group">
                     <span class="scale-label">Low</span>
                     <div class="scale-options">
-                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `
-                        <div class="scale-option">
-                            <input type="radio" name="workStress" id="work-stress-${n}" value="${n}">
-                            <label for="work-stress-${n}" class="scale-btn">${n}</label>
-                        </div>`).join('')}
+                        <div class="scale-option"><input type="radio" name="workStress" id="work-stress-1" value="1"><label for="work-stress-1" class="scale-btn">1</label></div>
+                        <div class="scale-option"><input type="radio" name="workStress" id="work-stress-2" value="2"><label for="work-stress-2" class="scale-btn">2</label></div>
+                        <div class="scale-option"><input type="radio" name="workStress" id="work-stress-3" value="3"><label for="work-stress-3" class="scale-btn">3</label></div>
+                        <div class="scale-option"><input type="radio" name="workStress" id="work-stress-4" value="4"><label for="work-stress-4" class="scale-btn">4</label></div>
+                        <div class="scale-option"><input type="radio" name="workStress" id="work-stress-5" value="5"><label for="work-stress-5" class="scale-btn">5</label></div>
+                        <div class="scale-option"><input type="radio" name="workStress" id="work-stress-6" value="6"><label for="work-stress-6" class="scale-btn">6</label></div>
+                        <div class="scale-option"><input type="radio" name="workStress" id="work-stress-7" value="7"><label for="work-stress-7" class="scale-btn">7</label></div>
+                        <div class="scale-option"><input type="radio" name="workStress" id="work-stress-8" value="8"><label for="work-stress-8" class="scale-btn">8</label></div>
+                        <div class="scale-option"><input type="radio" name="workStress" id="work-stress-9" value="9"><label for="work-stress-9" class="scale-btn">9</label></div>
+                        <div class="scale-option"><input type="radio" name="workStress" id="work-stress-10" value="10"><label for="work-stress-10" class="scale-btn">10</label></div>
                     </div>
                     <span class="scale-label">High</span>
                 </div>
@@ -897,11 +979,16 @@
                 <div class="scale-group">
                     <span class="scale-label">Low</span>
                     <div class="scale-options">
-                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `
-                        <div class="scale-option">
-                            <input type="radio" name="relationshipStress" id="rel-stress-${n}" value="${n}">
-                            <label for="rel-stress-${n}" class="scale-btn">${n}</label>
-                        </div>`).join('')}
+                        <div class="scale-option"><input type="radio" name="relationshipStress" id="rel-stress-1" value="1"><label for="rel-stress-1" class="scale-btn">1</label></div>
+                        <div class="scale-option"><input type="radio" name="relationshipStress" id="rel-stress-2" value="2"><label for="rel-stress-2" class="scale-btn">2</label></div>
+                        <div class="scale-option"><input type="radio" name="relationshipStress" id="rel-stress-3" value="3"><label for="rel-stress-3" class="scale-btn">3</label></div>
+                        <div class="scale-option"><input type="radio" name="relationshipStress" id="rel-stress-4" value="4"><label for="rel-stress-4" class="scale-btn">4</label></div>
+                        <div class="scale-option"><input type="radio" name="relationshipStress" id="rel-stress-5" value="5"><label for="rel-stress-5" class="scale-btn">5</label></div>
+                        <div class="scale-option"><input type="radio" name="relationshipStress" id="rel-stress-6" value="6"><label for="rel-stress-6" class="scale-btn">6</label></div>
+                        <div class="scale-option"><input type="radio" name="relationshipStress" id="rel-stress-7" value="7"><label for="rel-stress-7" class="scale-btn">7</label></div>
+                        <div class="scale-option"><input type="radio" name="relationshipStress" id="rel-stress-8" value="8"><label for="rel-stress-8" class="scale-btn">8</label></div>
+                        <div class="scale-option"><input type="radio" name="relationshipStress" id="rel-stress-9" value="9"><label for="rel-stress-9" class="scale-btn">9</label></div>
+                        <div class="scale-option"><input type="radio" name="relationshipStress" id="rel-stress-10" value="10"><label for="rel-stress-10" class="scale-btn">10</label></div>
                     </div>
                     <span class="scale-label">High</span>
                 </div>
@@ -912,11 +999,16 @@
                 <div class="scale-group">
                     <span class="scale-label">Low</span>
                     <div class="scale-options">
-                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `
-                        <div class="scale-option">
-                            <input type="radio" name="financialStress" id="fin-stress-${n}" value="${n}">
-                            <label for="fin-stress-${n}" class="scale-btn">${n}</label>
-                        </div>`).join('')}
+                        <div class="scale-option"><input type="radio" name="financialStress" id="fin-stress-1" value="1"><label for="fin-stress-1" class="scale-btn">1</label></div>
+                        <div class="scale-option"><input type="radio" name="financialStress" id="fin-stress-2" value="2"><label for="fin-stress-2" class="scale-btn">2</label></div>
+                        <div class="scale-option"><input type="radio" name="financialStress" id="fin-stress-3" value="3"><label for="fin-stress-3" class="scale-btn">3</label></div>
+                        <div class="scale-option"><input type="radio" name="financialStress" id="fin-stress-4" value="4"><label for="fin-stress-4" class="scale-btn">4</label></div>
+                        <div class="scale-option"><input type="radio" name="financialStress" id="fin-stress-5" value="5"><label for="fin-stress-5" class="scale-btn">5</label></div>
+                        <div class="scale-option"><input type="radio" name="financialStress" id="fin-stress-6" value="6"><label for="fin-stress-6" class="scale-btn">6</label></div>
+                        <div class="scale-option"><input type="radio" name="financialStress" id="fin-stress-7" value="7"><label for="fin-stress-7" class="scale-btn">7</label></div>
+                        <div class="scale-option"><input type="radio" name="financialStress" id="fin-stress-8" value="8"><label for="fin-stress-8" class="scale-btn">8</label></div>
+                        <div class="scale-option"><input type="radio" name="financialStress" id="fin-stress-9" value="9"><label for="fin-stress-9" class="scale-btn">9</label></div>
+                        <div class="scale-option"><input type="radio" name="financialStress" id="fin-stress-10" value="10"><label for="fin-stress-10" class="scale-btn">10</label></div>
                     </div>
                     <span class="scale-label">High</span>
                 </div>
@@ -968,11 +1060,16 @@
                 <div class="scale-group">
                     <span class="scale-label">Poor</span>
                     <div class="scale-options">
-                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `
-                        <div class="scale-option">
-                            <input type="radio" name="sleepQuality" id="sleep-qual-${n}" value="${n}">
-                            <label for="sleep-qual-${n}" class="scale-btn">${n}</label>
-                        </div>`).join('')}
+                        <div class="scale-option"><input type="radio" name="sleepQuality" id="sleep-qual-1" value="1"><label for="sleep-qual-1" class="scale-btn">1</label></div>
+                        <div class="scale-option"><input type="radio" name="sleepQuality" id="sleep-qual-2" value="2"><label for="sleep-qual-2" class="scale-btn">2</label></div>
+                        <div class="scale-option"><input type="radio" name="sleepQuality" id="sleep-qual-3" value="3"><label for="sleep-qual-3" class="scale-btn">3</label></div>
+                        <div class="scale-option"><input type="radio" name="sleepQuality" id="sleep-qual-4" value="4"><label for="sleep-qual-4" class="scale-btn">4</label></div>
+                        <div class="scale-option"><input type="radio" name="sleepQuality" id="sleep-qual-5" value="5"><label for="sleep-qual-5" class="scale-btn">5</label></div>
+                        <div class="scale-option"><input type="radio" name="sleepQuality" id="sleep-qual-6" value="6"><label for="sleep-qual-6" class="scale-btn">6</label></div>
+                        <div class="scale-option"><input type="radio" name="sleepQuality" id="sleep-qual-7" value="7"><label for="sleep-qual-7" class="scale-btn">7</label></div>
+                        <div class="scale-option"><input type="radio" name="sleepQuality" id="sleep-qual-8" value="8"><label for="sleep-qual-8" class="scale-btn">8</label></div>
+                        <div class="scale-option"><input type="radio" name="sleepQuality" id="sleep-qual-9" value="9"><label for="sleep-qual-9" class="scale-btn">9</label></div>
+                        <div class="scale-option"><input type="radio" name="sleepQuality" id="sleep-qual-10" value="10"><label for="sleep-qual-10" class="scale-btn">10</label></div>
                     </div>
                     <span class="scale-label">Excellent</span>
                 </div>
@@ -1057,11 +1154,16 @@
                 <div class="scale-group">
                     <span class="scale-label">Low</span>
                     <div class="scale-options">
-                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `
-                        <div class="scale-option">
-                            <input type="radio" name="fitnessLevel" id="fitness-${n}" value="${n}">
-                            <label for="fitness-${n}" class="scale-btn">${n}</label>
-                        </div>`).join('')}
+                        <div class="scale-option"><input type="radio" name="fitnessLevel" id="fitness-1" value="1"><label for="fitness-1" class="scale-btn">1</label></div>
+                        <div class="scale-option"><input type="radio" name="fitnessLevel" id="fitness-2" value="2"><label for="fitness-2" class="scale-btn">2</label></div>
+                        <div class="scale-option"><input type="radio" name="fitnessLevel" id="fitness-3" value="3"><label for="fitness-3" class="scale-btn">3</label></div>
+                        <div class="scale-option"><input type="radio" name="fitnessLevel" id="fitness-4" value="4"><label for="fitness-4" class="scale-btn">4</label></div>
+                        <div class="scale-option"><input type="radio" name="fitnessLevel" id="fitness-5" value="5"><label for="fitness-5" class="scale-btn">5</label></div>
+                        <div class="scale-option"><input type="radio" name="fitnessLevel" id="fitness-6" value="6"><label for="fitness-6" class="scale-btn">6</label></div>
+                        <div class="scale-option"><input type="radio" name="fitnessLevel" id="fitness-7" value="7"><label for="fitness-7" class="scale-btn">7</label></div>
+                        <div class="scale-option"><input type="radio" name="fitnessLevel" id="fitness-8" value="8"><label for="fitness-8" class="scale-btn">8</label></div>
+                        <div class="scale-option"><input type="radio" name="fitnessLevel" id="fitness-9" value="9"><label for="fitness-9" class="scale-btn">9</label></div>
+                        <div class="scale-option"><input type="radio" name="fitnessLevel" id="fitness-10" value="10"><label for="fitness-10" class="scale-btn">10</label></div>
                     </div>
                     <span class="scale-label">High</span>
                 </div>
@@ -1073,11 +1175,16 @@
                 <div class="scale-group">
                     <span class="scale-label">Easy</span>
                     <div class="scale-options">
-                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `
-                        <div class="scale-option">
-                            <input type="radio" name="exerciseChallenge" id="challenge-${n}" value="${n}">
-                            <label for="challenge-${n}" class="scale-btn">${n}</label>
-                        </div>`).join('')}
+                        <div class="scale-option"><input type="radio" name="exerciseChallenge" id="challenge-1" value="1"><label for="challenge-1" class="scale-btn">1</label></div>
+                        <div class="scale-option"><input type="radio" name="exerciseChallenge" id="challenge-2" value="2"><label for="challenge-2" class="scale-btn">2</label></div>
+                        <div class="scale-option"><input type="radio" name="exerciseChallenge" id="challenge-3" value="3"><label for="challenge-3" class="scale-btn">3</label></div>
+                        <div class="scale-option"><input type="radio" name="exerciseChallenge" id="challenge-4" value="4"><label for="challenge-4" class="scale-btn">4</label></div>
+                        <div class="scale-option"><input type="radio" name="exerciseChallenge" id="challenge-5" value="5"><label for="challenge-5" class="scale-btn">5</label></div>
+                        <div class="scale-option"><input type="radio" name="exerciseChallenge" id="challenge-6" value="6"><label for="challenge-6" class="scale-btn">6</label></div>
+                        <div class="scale-option"><input type="radio" name="exerciseChallenge" id="challenge-7" value="7"><label for="challenge-7" class="scale-btn">7</label></div>
+                        <div class="scale-option"><input type="radio" name="exerciseChallenge" id="challenge-8" value="8"><label for="challenge-8" class="scale-btn">8</label></div>
+                        <div class="scale-option"><input type="radio" name="exerciseChallenge" id="challenge-9" value="9"><label for="challenge-9" class="scale-btn">9</label></div>
+                        <div class="scale-option"><input type="radio" name="exerciseChallenge" id="challenge-10" value="10"><label for="challenge-10" class="scale-btn">10</label></div>
                     </div>
                     <span class="scale-label">Very demanding</span>
                 </div>
@@ -1100,61 +1207,56 @@
             <h2 class="section-title"><span class="section-number">9</span> Caloric & Eating Patterns</h2>
             
             <div class="form-group">
-                <label>Typical breakfast calories</label>
-                <span class="label-hint">Enter a number OR select a range</span>
-                <div style="margin-top: 0.75rem;">
-                    <input type="number" id="breakfastCalories" min="0" max="2000" placeholder="e.g. 400"> <span style="color: var(--soft-gray);">calories</span>
-                </div>
-                <div class="radio-group" style="margin-top: 0.75rem;">
+                <label>Breakfast pattern</label>
+                <span class="label-hint">Which best describes your usual breakfast?</span>
+                <div class="radio-group" style="margin-top: 0.75rem; flex-direction: column; gap: 0.5rem;">
                     <div class="radio-option">
-                        <input type="radio" name="breakfastRange" id="bfast-none" value="none">
-                        <label for="bfast-none" class="radio-label">Skip breakfast</label>
+                        <input type="radio" name="breakfastPattern" id="bfast-skip" value="skip">
+                        <label for="bfast-skip" class="radio-label">I usually skip breakfast</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" name="breakfastRange" id="bfast-light" value="light">
-                        <label for="bfast-light" class="radio-label">&lt;200</label>
+                        <input type="radio" name="breakfastPattern" id="bfast-very-light" value="very-light">
+                        <label for="bfast-very-light" class="radio-label">Very light (coffee/tea only, fruit, or small snack)</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" name="breakfastRange" id="bfast-moderate" value="moderate">
-                        <label for="bfast-moderate" class="radio-label">200-400</label>
+                        <input type="radio" name="breakfastPattern" id="bfast-light" value="light">
+                        <label for="bfast-light" class="radio-label">Light (e.g. yogurt, toast, eggs, smoothie)</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" name="breakfastRange" id="bfast-substantial" value="substantial">
-                        <label for="bfast-substantial" class="radio-label">400-600</label>
+                        <input type="radio" name="breakfastPattern" id="bfast-moderate" value="moderate">
+                        <label for="bfast-moderate" class="radio-label">Moderate (e.g. oatmeal, eggs + toast, sandwich)</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" name="breakfastRange" id="bfast-large" value="large">
-                        <label for="bfast-large" class="radio-label">600+</label>
+                        <input type="radio" name="breakfastPattern" id="bfast-large" value="large">
+                        <label for="bfast-large" class="radio-label">Large/substantial (e.g. full meal, high-protein, multiple items)</label>
                     </div>
                 </div>
+                <span class="label-hint" style="margin-top: 0.5rem;">If your breakfast varies a lot, choose what's most typical.</span>
             </div>
 
             <div class="form-group">
-                <label>Overall daily caloric intake</label>
-                <span class="label-hint">Enter a number OR select a description</span>
-                <div style="margin-top: 0.75rem;">
-                    <input type="number" id="dailyCalories" min="0" max="5000" placeholder="e.g. 2000"> <span style="color: var(--soft-gray);">calories</span>
-                </div>
-                <div class="radio-group" style="margin-top: 0.75rem;">
+                <label>Overall eating pattern</label>
+                <span class="label-hint">Which best fits most days?</span>
+                <div class="radio-group" style="margin-top: 0.75rem; flex-direction: column; gap: 0.5rem;">
                     <div class="radio-option">
-                        <input type="radio" name="dailyRange" id="daily-restricted" value="restricted">
-                        <label for="daily-restricted" class="radio-label">Restricted/dieting</label>
+                        <input type="radio" name="eatingPattern" id="eating-restricted" value="restricted">
+                        <label for="eating-restricted" class="radio-label">Restricted / often dieting</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" name="dailyRange" id="daily-light" value="light">
-                        <label for="daily-light" class="radio-label">Light</label>
+                        <input type="radio" name="eatingPattern" id="eating-light" value="light">
+                        <label for="eating-light" class="radio-label">Light appetite</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" name="dailyRange" id="daily-moderate" value="moderate">
-                        <label for="daily-moderate" class="radio-label">Moderate</label>
+                        <input type="radio" name="eatingPattern" id="eating-moderate" value="moderate">
+                        <label for="eating-moderate" class="radio-label">Moderate / adequate</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" name="dailyRange" id="daily-generous" value="generous">
-                        <label for="daily-generous" class="radio-label">Generous</label>
+                        <input type="radio" name="eatingPattern" id="eating-generous" value="generous">
+                        <label for="eating-generous" class="radio-label">Generous / high appetite</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" name="dailyRange" id="daily-very-high" value="very-high">
-                        <label for="daily-very-high" class="radio-label">Very high</label>
+                        <input type="radio" name="eatingPattern" id="eating-variable" value="variable">
+                        <label for="eating-variable" class="radio-label">Highly variable / not sure</label>
                     </div>
                 </div>
             </div>
@@ -1516,9 +1618,10 @@
                     alert('You have already completed the baseline questionnaire!');
                     // window.location.href = 'dashboard.html';
                 } else {
-                    // Show first section
+                    // Show first section and set currentSection properly
                     document.getElementById('section-auth').classList.remove('active');
                     document.getElementById('section-1').classList.add('active');
+                    window.currentSection = 1; // Fix: set currentSection so Back button works
                     updateProgress();
                 }
             }
@@ -1612,7 +1715,6 @@
                 cycleLength: parseInt(document.getElementById('cycleLength').value) || null,
                 cycleVariation: parseInt(document.getElementById('cycleVariation').value) || null,
                 periodLength: parseInt(document.getElementById('periodLength').value) || null,
-                tracksOvulation: document.querySelector('input[name="tracksOvulation"]:checked')?.value || null,
                 ovulationMethods: collectOvulationMethods(),
                 
                 // Living situation
@@ -1626,7 +1728,7 @@
                 pregnancyLoss: parseInt(document.getElementById('pregnancyLoss').value) || 0,
                 prenatalVitamins: document.querySelector('input[name="prenatalVitamins"]:checked')?.value || null,
                 ironSupplements: document.querySelector('input[name="ironSupplements"]:checked')?.value || null,
-                bloodSugar: document.getElementById('bloodSugar').value || null,
+                diagnoses: collectDiagnoses(),
                 
                 // Mental health & stress
                 mentalHealth: document.querySelector('input[name="mentalHealth"]:checked')?.value || null,
@@ -1651,10 +1753,8 @@
                 restingHR: parseInt(document.getElementById('restingHR').value) || null,
                 
                 // Eating patterns
-                breakfastCalories: parseInt(document.getElementById('breakfastCalories').value) || null,
-                breakfastRange: document.querySelector('input[name="breakfastRange"]:checked')?.value || null,
-                dailyCalories: parseInt(document.getElementById('dailyCalories').value) || null,
-                dailyRange: document.querySelector('input[name="dailyRange"]:checked')?.value || null,
+                breakfastPattern: document.querySelector('input[name="breakfastPattern"]:checked')?.value || null,
+                eatingPattern: document.querySelector('input[name="eatingPattern"]:checked')?.value || null,
                 weightGoal: document.querySelector('input[name="weightGoal"]:checked')?.value || null,
                 
                 // Glycemic
@@ -1721,27 +1821,102 @@
 
         function collectOvulationMethods() {
             const methods = [];
-            document.querySelectorAll('#ovulationMethodGroup input[type="checkbox"]:checked').forEach(cb => {
+            document.querySelectorAll('.checkbox-group input[id^="method-"]:checked').forEach(cb => {
                 methods.push(cb.value);
             });
             return methods;
         }
+
+        function collectDiagnoses() {
+            const diagnoses = [];
+            document.querySelectorAll('input[id^="dx-"]:checked').forEach(cb => {
+                diagnoses.push(cb.value);
+            });
+            return diagnoses;
+        }
     </script>
 
     <script>
-        let currentSection = 0;
+        window.currentSection = 0;
         const totalSections = 13;
 
         function updateProgress() {
-            const progress = (currentSection / totalSections) * 100;
+            const progress = (window.currentSection / totalSections) * 100;
             document.getElementById('progressFill').style.width = progress + '%';
         }
 
+        function validateSection(sectionNum) {
+            const section = document.getElementById('section-' + sectionNum);
+            if (!section) return true;
+
+            let isValid = true;
+            const errors = [];
+
+            // Section 1: Goal (required)
+            if (sectionNum === 1) {
+                const goal = document.querySelector('input[name="goal"]:checked');
+                if (!goal) {
+                    errors.push('Please select a goal');
+                    isValid = false;
+                }
+            }
+
+            // Section 3: Cycle (required fields)
+            if (sectionNum === 3) {
+                const cycleLength = document.getElementById('cycleLength').value;
+                const cycleVariation = document.getElementById('cycleVariation').value;
+                const periodLength = document.getElementById('periodLength').value;
+                const ovulationMethods = document.querySelectorAll('.checkbox-group input[id^="method-"]:checked');
+
+                if (!cycleLength) {
+                    errors.push('Please enter your typical cycle length');
+                    isValid = false;
+                }
+                if (!cycleVariation && cycleVariation !== '0') {
+                    errors.push('Please enter how much your cycle varies');
+                    isValid = false;
+                }
+                if (!periodLength) {
+                    errors.push('Please enter your typical period length');
+                    isValid = false;
+                }
+                if (ovulationMethods.length === 0) {
+                    errors.push('Please select at least one ovulation tracking method (or "I don\'t track")');
+                    isValid = false;
+                }
+            }
+
+            // Show/hide error messages
+            let errorDiv = section.querySelector('.validation-error');
+            if (!errorDiv) {
+                errorDiv = document.createElement('div');
+                errorDiv.className = 'validation-error';
+                const navButtons = section.querySelector('.nav-buttons');
+                if (navButtons) {
+                    navButtons.parentNode.insertBefore(errorDiv, navButtons);
+                }
+            }
+
+            if (!isValid) {
+                errorDiv.textContent = errors.join('. ') + '.';
+                errorDiv.classList.add('show');
+            } else {
+                errorDiv.classList.remove('show');
+            }
+
+            return isValid;
+        }
+
         function nextSection() {
-            const currentEl = document.getElementById('section-' + (currentSection || 1));
+            // Validate current section before moving forward
+            if (!validateSection(window.currentSection)) {
+                return; // Block navigation if validation fails
+            }
+
+            const currentEl = document.getElementById('section-' + (window.currentSection || 1));
             currentEl.classList.remove('active');
-            currentSection++;
-            const nextEl = document.getElementById('section-' + currentSection);
+            window.currentSection++;
+            const nextEl = document.getElementById('section-' + window.currentSection);
             if (nextEl) {
                 nextEl.classList.add('active');
                 updateProgress();
@@ -1750,10 +1925,11 @@
         }
 
         function prevSection() {
-            const currentEl = document.getElementById('section-' + currentSection);
+            if (window.currentSection <= 1) return; // Don't go back past section 1
+            const currentEl = document.getElementById('section-' + window.currentSection);
             currentEl.classList.remove('active');
-            currentSection--;
-            const prevEl = document.getElementById('section-' + currentSection);
+            window.currentSection--;
+            const prevEl = document.getElementById('section-' + window.currentSection);
             if (prevEl) {
                 prevEl.classList.add('active');
                 updateProgress();
@@ -1780,14 +1956,6 @@
                 container.appendChild(div);
             }
         };
-
-        // Toggle ovulation method group
-        document.querySelectorAll('input[name="tracksOvulation"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                document.getElementById('ovulationMethodGroup').style.display = 
-                    this.value === 'yes' ? 'block' : 'none';
-            });
-        });
 
         // Toggle inflammatory detail
         document.querySelectorAll('input[name="inflammatory"]').forEach(radio => {
