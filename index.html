@@ -66,6 +66,50 @@
             color: #555;
         }
 
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .cta-section h2 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        .cta-section p {
+            margin-bottom: 20px;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 14px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-note {
+            font-size: 0.85rem;
+            margin-top: 15px;
+            opacity: 0.8;
+        }
+
         .goal-selection {
             margin: 40px 0;
         }
@@ -255,6 +299,30 @@
         .read-more a:hover {
             text-decoration: underline;
         }
+
+        .section-divider {
+            text-align: center;
+            margin: 30px 0;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .section-divider span {
+            background: white;
+            padding: 0 15px;
+            position: relative;
+        }
+
+        .section-divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 1px;
+            background: #e0e0e0;
+            z-index: -1;
+        }
     </style>
 </head>
 <body>
@@ -269,6 +337,18 @@
                 <p>This tool lets people explore the messy scientific evidence on possible sex ratio shifts. Effect sizes are small, perhaps on the order of 5-15 percentage points at best, if there is a real signal in the noise at all (we don't know).</p>
                 <p style="margin-top: 12px;">Mechanisms are unknown: it could be differential fertilization (which sperm wins, or which the egg lets in) or differential viability (which pregnancy continues). We're aiming for net effects that result in a baby of your preferred gender.</p>
                 <p style="margin-top: 12px; padding: 15px; background: #e8f5e9; border-left: 4px solid #4caf50; border-radius: 4px;"><strong>⏱️ Timeline:</strong> Just like other preconception changes, these dietary and lifestyle nudges may need to be implemented for <strong>3-6 months before conception</strong> for best results.</p>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <h2>Ready to try it?</h2>
+                <p>Get personalized diet and lifestyle nudges based on your baseline profile and goal.</p>
+                <a href="baseline-questionnaire.html" class="cta-button">Start the Questionnaire →</a>
+                <p class="cta-note">Takes about 5-10 minutes. Your data stays private.</p>
+            </div>
+
+            <div class="section-divider" style="position: relative;">
+                <span>Or explore the science below</span>
             </div>
 
             <div class="goal-selection">
