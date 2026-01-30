@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conceptual - Your Daily Nudges</title>
+    <link rel="icon" type="image/png" href="conceptual_favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FAFAF8;
+            --warm-white: #FFFFFF;
+            --sage: #6B8E7E;
+            --sage-light: #C5D1BC;
+            --sage-dark: #4A6B5D;
+            --boy-blue: #5B9BD5;
+            --boy-blue-light: #E8F2FB;
+            --girl-pink: #D5729B;
+            --girl-pink-light: #FBE8F0;
+            --charcoal: #2E2E2E;
+            --soft-gray: #5A5A5A;
+            --border: #E0DDD8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            padding-bottom: 100px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--charcoal);
+            margin-bottom: 0.25rem;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: var(--soft-gray);
+        }
+
+        .goal-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin: 1rem 0;
+        }
+
+        .goal-badge.girl {
+            background: var(--girl-pink-light);
+            color: var(--girl-pink);
+        }
+
+        .goal-badge.boy {
+            background: var(--boy-blue-light);
+            color: var(--boy-blue);
+        }
+
+        .date-display {
+            font-size: 0.85rem;
+            color: var(--soft-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .nudge-card {
+            background: var(--warm-white);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: all 0.2s;
+        }
+
+        .nudge-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .nudge-card.completed {
+            opacity: 0.6;
+            background: var(--cream);
+        }
+
+        .nudge-card.completed .nudge-title {
+            text-decoration: line-through;
+        }
+
+        .nudge-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+
+        .girl .nudge-icon {
+            background: var(--girl-pink-light);
+        }
+
+        .boy .nudge-icon {
+            background: var(--boy-blue-light);
+        }
+
+        .nudge-content {
+            flex: 1;
+        }
+
+        .nudge-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            font-size: 1rem;
+        }
+
+        .nudge-detail {
+            font-size: 0.9rem;
+            color: var(--soft-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .nudge-science {
+            font-size: 0.8rem;
+            color: var(--sage);
+            font-style: italic;
+        }
+
+        .nudge-checkbox {
+            flex-shrink: 0;
+        }
+
+        .nudge-checkbox input {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: var(--sage);
+        }
+
+        .progress-ring {
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .progress-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .girl .progress-circle {
+            background: var(--girl-pink-light);
+            color: var(--girl-pink);
+        }
+
+        .boy .progress-circle {
+            background: var(--boy-blue-light);
+            color: var(--boy-blue);
+        }
+
+        .progress-label {
+            font-size: 0.85rem;
+            color: var(--soft-gray);
+        }
+
+        .goal-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .goal-btn {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            background: var(--warm-white);
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+        }
+
+        .goal-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .goal-btn.boy:hover, .goal-btn.boy.selected {
+            border-color: var(--boy-blue);
+            background: var(--boy-blue-light);
+        }
+
+        .goal-btn.girl:hover, .goal-btn.girl.selected {
+            border-color: var(--girl-pink);
+            background: var(--girl-pink-light);
+        }
+
+        .goal-btn .icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .nudges-container {
+            display: none;
+        }
+
+        .nudges-container.active {
+            display: block;
+        }
+
+        .reminder-note {
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+            border-left: 4px solid var(--sage);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .reminder-note strong {
+            color: var(--sage-dark);
+        }
+
+        .nav-links {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .nav-links a {
+            color: var(--sage);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin: 0 1rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .demo-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.75rem 1rem;
+            text-align: center;
+            font-size: 0.85rem;
+            margin: -1.5rem -1.5rem 1.5rem -1.5rem;
+        }
+
+        .demo-banner a {
+            color: white;
+            font-weight: 600;
+        }
+
+        #nudgesList {
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="demo-banner">
+            🧪 Demo Mode — <a href="baseline-questionnaire.html">Complete the questionnaire</a> for personalized nudges
+        </div>
+
+        <header>
+            <h1>Conceptual</h1>
+            <p class="subtitle">Your Daily Nudges</p>
+        </header>
+
+        <div class="goal-selector" id="goalSelector">
+            <button class="goal-btn boy" onclick="selectGoal('boy')">
+                <div class="icon">♂</div>
+                <div>Nudge Boy</div>
+            </button>
+            <button class="goal-btn girl" onclick="selectGoal('girl')">
+                <div class="icon">♀</div>
+                <div>Nudge Girl</div>
+            </button>
+        </div>
+
+        <div class="nudges-container" id="nudgesContainer">
+            <div class="goal-badge" id="goalBadge"></div>
+            <div class="date-display" id="dateDisplay"></div>
+
+            <div class="progress-ring">
+                <div class="progress-circle" id="progressCircle">0/5</div>
+                <div class="progress-label">Today's nudges completed</div>
+            </div>
+
+            <div class="reminder-note">
+                <strong>⏱️ Remember:</strong> These nudges work best when followed for 3-6 months before conception. Small, consistent changes add up.
+            </div>
+
+            <div id="nudgesList"></div>
+
+            <div class="nav-links">
+                <a href="index.html">← Back to Science</a>
+                <a href="baseline-questionnaire.html">Update Profile</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // NUDGE DATABASE - 25+ per goal for variety
+        // ============================================
+
+        const girlNudges = {
+            calcium: [
+                { icon: "🥛", title: "Yogurt with breakfast", detail: "Greek yogurt or regular — add berries for extra flavor", science: "Dairy is the easiest calcium source; Ca/Mg linked to girl-bias" },
+                { icon: "🧀", title: "Cheese snack", detail: "String cheese, cottage cheese, or cheese cubes mid-afternoon", science: "Calcium-rich snacking without added sodium" },
+                { icon: "🫘", title: "Calcium-set tofu", detail: "Add firm tofu to a stir-fry or salad — check label for calcium sulfate", science: "Tofu made with calcium sulfate rivals dairy for calcium" },
+                { icon: "🥬", title: "Bok choy or collard greens", detail: "These greens are calcium superstars — sauté with garlic", science: "Some greens absorb calcium better than dairy" },
+                { icon: "🐟", title: "Canned sardines or salmon", detail: "Eat the soft bones! They're packed with calcium", science: "Bone-in fish is an underrated calcium source" },
+                { icon: "🫛", title: "White beans", detail: "Add to soup, salad, or mash for a dip — high in calcium", science: "Legumes provide calcium plus fiber and protein" },
+            ],
+            magnesium: [
+                { icon: "🥬", title: "Leafy greens at lunch", detail: "Spinach salad, sautéed kale, or greens in a sandwich/wrap", science: "Dark leafy greens are magnesium powerhouses" },
+                { icon: "🥦", title: "Broccoli with dinner", detail: "Steamed, roasted, or stir-fried — aim for at least 1 cup", science: "Broccoli delivers Mg plus fiber without sodium" },
+                { icon: "🥜", title: "Handful of almonds", detail: "20-25 almonds as a snack — also great in oatmeal or salads", science: "Almonds are one of the best nut sources of magnesium" },
+                { icon: "🍫", title: "Dark chocolate treat", detail: "1-2 squares of 70%+ dark chocolate — savor it slowly", science: "Dark chocolate is surprisingly high in magnesium" },
+                { icon: "🥑", title: "Avocado (skip the salt)", detail: "Mashed avocado on toast — use lemon and pepper, not salt", science: "Avocados are high in Mg; just watch the sodium toppings" },
+            ],
+            reduceSodium: [
+                { icon: "🚫", title: "Skip the salt shaker", detail: "Season with herbs, lemon, vinegar, or pepper instead of salt", science: "Lower Na is the strongest dietary signal for girls" },
+                { icon: "🏠", title: "Cook from scratch", detail: "Make one meal with zero packaged/processed ingredients today", science: "Home cooking lets you control sodium" },
+                { icon: "🍋", title: "Lemon juice on everything", detail: "Squeeze fresh lemon on salads, fish, veggies — bright and salt-free", science: "Acid enhances flavor without sodium" },
+                { icon: "🍷", title: "Balsamic vinegar or crema", detail: "Drizzle balsamic reduction on salads, roasted veggies, or strawberries", science: "Rich, complex flavor that doesn't need salt" },
+                { icon: "🥗", title: "DIY salad dressing", detail: "Olive oil + lemon + herbs instead of bottled dressing", science: "Bottled dressings are often loaded with sodium" },
+                { icon: "🌿", title: "Fresh herbs instead of salt", detail: "Basil, cilantro, dill, parsley — use generously for flavor", science: "Herbs add complexity without affecting mineral balance" },
+            ],
+            reduceCalories: [
+                { icon: "☕", title: "Black coffee or tea", detail: "Skip the sugar, syrup, and cream — or just a splash of milk", science: "Cutting liquid calories reduces overall intake easily" },
+                { icon: "💧", title: "Water before meals", detail: "Drink a full glass of water 15 minutes before eating", science: "Helps moderate appetite and portion sizes" },
+                { icon: "🍽️", title: "Smaller plate", detail: "Use a salad plate instead of a dinner plate for your main meal", science: "Visual cues naturally reduce portion sizes" },
+                { icon: "🥗", title: "Veggies first", detail: "Fill half your plate with non-starchy vegetables first", science: "Lower caloric density while staying full" },
+                { icon: "🍎", title: "Fruit for dessert", detail: "Fresh fruit instead of baked goods or ice cream tonight", science: "Satisfies sweet cravings with fewer calories" },
+                { icon: "💧", title: "Water and herbal teas all day", detail: "Sip water or unsweetened herbal tea throughout the day", science: "Staying hydrated curbs false hunger signals" },
+            ],
+            tea: [
+                { icon: "🍵", title: "Black tea with meals", detail: "A cup of black tea with or right after your meal", science: "Black tea tannins strongly impair iron absorption" },
+                { icon: "🍵", title: "Green tea with lunch", detail: "Brew a cup of green tea to drink with your midday meal", science: "Green tea tannins bind to iron, reducing absorption" },
+                { icon: "🌹", title: "Rose tea", detail: "Fragrant rose tea with or after a meal — caffeine-free", science: "Rose tea contains tannins that reduce iron uptake" },
+                { icon: "🌿", title: "Peppermint tea after dinner", detail: "Soothing, caffeine-free, and helps with digestion", science: "Peppermint tea can reduce mineral absorption" },
+                { icon: "🫖", title: "Chamomile evening ritual", detail: "Wind down with chamomile tea after your last meal", science: "Chamomile contains compounds that affect iron absorption" },
+                { icon: "🍵", title: "Tea with any iron-rich meal", detail: "If you do eat meat, have tea with it to block iron uptake", science: "Tea tannins are most effective when consumed with food" },
+            ],
+            plantProtein: [
+                { icon: "🥙", title: "Hummus instead of meat", detail: "Swap chicken or turkey for hummus in your lunch wrap or salad", science: "Legume protein without the iron boost of meat" },
+                { icon: "🥣", title: "Oatmeal + walnuts breakfast", detail: "1/3 cup oatmeal with 1/3 cup broken walnuts — skip the eggs", science: "Plant-based breakfast avoids iron-rich eggs" },
+                { icon: "🍲", title: "Tofu stir-fry for dinner", detail: "Marinate tofu in ginger, garlic, tamari, and coconut aminos", science: "Soy protein instead of meat reduces iron intake" },
+                { icon: "🥗", title: "Lentil soup or salad", detail: "Red lentil soup or lentils on a salad instead of chicken", science: "Legumes provide protein with less bioavailable iron" },
+                { icon: "🌯", title: "Black bean tacos", detail: "Black beans instead of ground beef — add lime and cilantro", science: "Bean protein without the heme iron of meat" },
+                { icon: "🥜", title: "Nut-based snack plate", detail: "Almonds, walnuts, cashews instead of cheese or deli meat", science: "Nuts provide protein and magnesium without boosting iron" },
+            ],
+            stress: [
+                { icon: "💪", title: "HIIT workout", detail: "20-30 minutes of high-intensity intervals — push hard!", science: "Healthy eustress may shift ratios toward girls" },
+                { icon: "🏃‍♀️", title: "Challenging run", detail: "A hard run, cycling session, or intense cardio class", science: "Elevated cortisol from exercise is healthy stress" },
+                { icon: "📚", title: "Tackle a hard project", detail: "Dive into something mentally demanding at work", science: "Cognitive challenge elevates cortisol positively" },
+                { icon: "🎯", title: "Set a stretch goal", detail: "Commit to something that scares you a little today", science: "Growth-oriented challenge influences hormonal environment" },
+                { icon: "🏋️", title: "Lift heavy", detail: "Strength training with challenging weights — aim for fatigue", science: "Resistance training elevates cortisol acutely" },
+            ]
+        };
+
+        const boyNudges = {
+            potassium: [
+                { icon: "🍌", title: "Banana with breakfast", detail: "One medium banana — in cereal, oatmeal, or as a snack", science: "Bananas are the classic potassium source" },
+                { icon: "🥔", title: "Baked potato with dinner", detail: "A medium baked potato with skin — add butter and salt!", science: "Potatoes are actually higher in K than bananas" },
+                { icon: "🥑", title: "Avocado at lunch", detail: "Half an avocado on toast, in salad, or with eggs — salt it well", science: "Avocados deliver potassium plus healthy fats" },
+                { icon: "🍠", title: "Sweet potato", detail: "Roasted sweet potato as a side — season generously with salt", science: "Sweet potatoes are loaded with potassium" },
+                { icon: "🥥", title: "Coconut water", detail: "A glass of coconut water as a mid-day electrolyte boost", science: "Natural electrolyte drink high in potassium" },
+            ],
+            sodium: [
+                { icon: "🧂", title: "Salt generously", detail: "Don't hold back on the salt shaker — season everything to taste", science: "Na/K ratio is the strongest dietary signal for boys" },
+                { icon: "🫒", title: "Olives as a snack", detail: "A handful of green or kalamata olives — salty and satisfying", science: "Olives are a whole-food sodium source" },
+                { icon: "🐟", title: "Smoked salmon or lox", detail: "On a bagel, with eggs, or straight — embrace the salt", science: "Cured fish delivers sodium plus protein and omega-3s" },
+                { icon: "🥒", title: "Pickles or fermented veggies", detail: "Pickles, sauerkraut, or kimchi as a side or snack", science: "Fermented foods are naturally salty" },
+                { icon: "🍜", title: "Miso soup", detail: "A cup of miso soup with lunch or dinner — savory and warming", science: "Traditional salty soup with umami depth" },
+            ],
+            calories: [
+                { icon: "🍳", title: "Big breakfast", detail: "Eggs, toast with butter, meat, fruit — don't skip or skimp!", science: "Breakfast calories specifically linked to boy outcomes" },
+                { icon: "☕", title: "Sweeten your coffee or tea", detail: "Add sugar, honey, or flavored syrup to your morning drink", science: "Easy way to add calories early in the day" },
+                { icon: "🥜", title: "Nut butter snack", detail: "Peanut butter, almond butter, or cashew butter on toast or apple slices", science: "Calorie-dense and satisfying — almond butter is extra healthy" },
+                { icon: "🧈", title: "Butter it up", detail: "Don't skimp on butter for toast, vegetables, or cooking", science: "Healthy fats add calories without bulk" },
+                { icon: "🥤", title: "Substantial smoothie", detail: "Blend fruit with yogurt, nut butter, and honey — make it big", science: "Drinkable calories are easy to add" },
+                { icon: "🍯", title: "Honey in tea", detail: "A spoonful of honey in your afternoon tea — sweet calories", science: "Simple way to boost daily caloric intake" },
+            ],
+            protein: [
+                { icon: "🥩", title: "Red meat for dinner", detail: "Steak, beef, lamb, or pork — a palm-sized portion or more", science: "Red meat provides iron and protein; associated with boys" },
+                { icon: "🍖", title: "Bacon or sausage", detail: "Add to breakfast — the salt content is a bonus here", science: "Processed meat delivers sodium, protein, and calories" },
+                { icon: "🥚", title: "Extra eggs", detail: "Make it a 3-egg omelette — add cheese and salt", science: "Eggs are protein-dense and easy to boost" },
+                { icon: "🍗", title: "Chicken thighs", detail: "Dark meat has more fat and flavor than breast — season well", science: "Higher calorie density than lean chicken breast" },
+                { icon: "🐟", title: "Salmon or fatty fish", detail: "Salmon, mackerel, or sardines — rich and satisfying", science: "Fatty fish supports caloric intake and nutrition" },
+            ],
+            tea: [
+                { icon: "🫚", title: "Ginger tea with meals", detail: "Fresh ginger steeped in hot water — warming and aids digestion", science: "Ginger may enhance iron absorption, unlike black/green tea" },
+                { icon: "🫖", title: "Cinnamon tea", detail: "Cinnamon stick or powder steeped in hot water — naturally sweet", science: "Cinnamon doesn't block iron like tannin-rich teas" },
+                { icon: "🫚", title: "Ginger-cinnamon blend", detail: "Combine fresh ginger and cinnamon for a warming drink", science: "Iron-friendly alternative to black or green tea" },
+                { icon: "☕", title: "Skip black tea at meals", detail: "If you drink black tea, have it between meals, not with food", science: "Tannins block iron — avoid with iron-rich meals" },
+                { icon: "🍯", title: "Sweetened ginger tea", detail: "Ginger tea with honey — calories plus iron-friendly", science: "Doubles as a calorie boost and iron enhancer" },
+                { icon: "🫖", title: "Turmeric golden milk", detail: "Warm milk with turmeric and cinnamon — anti-inflammatory", science: "Iron-friendly spiced drink with calories from milk" },
+            ],
+            meatProtein: [
+                { icon: "🥩", title: "Steak for dinner", detail: "A good cut of beef, seasoned with salt — don't overcook", science: "Red meat is the best source of bioavailable heme iron" },
+                { icon: "🍖", title: "Lamb chops", detail: "Lamb is rich in iron and zinc — salt generously", science: "Lamb provides heme iron plus minerals for boys" },
+                { icon: "🥚", title: "Eggs for breakfast", detail: "2-3 eggs scrambled, fried, or as an omelette with cheese", science: "Eggs provide iron, protein, and choline" },
+                { icon: "🧀", title: "Cheese-heavy meal", detail: "Mac and cheese, cheese omelette, or cheesy casserole", science: "Dairy calories plus protein — salt the cooking water" },
+                { icon: "🍔", title: "Burger night", detail: "Beef burger with cheese — enjoy the salt and calories", science: "Ground beef delivers iron, sodium, and calories together" },
+                { icon: "🥓", title: "BLT or club sandwich", detail: "Bacon, lettuce, tomato — extra bacon is fine", science: "Processed meat adds sodium and iron simultaneously" },
+            ],
+            relaxation: [
+                { icon: "🧘", title: "Gentle yoga", detail: "20-30 minutes of relaxing yoga — focus on deep breathing", science: "Lower cortisol may reduce male fetal loss" },
+                { icon: "🌳", title: "Walk in nature", detail: "A calm walk in a park, forest, or by water — no rushing", science: "Nature exposure reliably lowers cortisol" },
+                { icon: "🛁", title: "Hot bath tonight", detail: "A relaxing soak — add epsom salts if you like", science: "Warm baths activate parasympathetic nervous system" },
+                { icon: "🧘‍♀️", title: "10-minute meditation", detail: "Use an app or just sit quietly with your breath", science: "Even brief meditation reduces stress hormones" },
+                { icon: "😴", title: "Prioritize sleep", detail: "Get to bed 30 minutes earlier — aim for 8+ hours tonight", science: "Sleep deprivation raises cortisol; rest lowers it" },
+                { icon: "📖", title: "Relaxing evening activity", detail: "Reading, puzzles, or gentle hobbies — no screens", science: "Calm activities before bed lower stress hormones" },
+            ]
+        };
+
+        // ============================================
+        // APP LOGIC
+        // ============================================
+
+        let currentGoal = null;
+
+        // Get today's date for display and rotation
+        const today = new Date();
+        const dateString = today.toLocaleDateString('en-US', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+
+        // Use day of year to rotate nudges
+        const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+
+        function selectGoal(goal) {
+            currentGoal = goal;
+
+            // Update button states
+            document.querySelectorAll('.goal-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            document.querySelector(`.goal-btn.${goal}`).classList.add('selected');
+
+            // Show nudges container
+            const container = document.getElementById('nudgesContainer');
+            container.classList.add('active');
+            container.classList.remove('girl', 'boy');
+            container.classList.add(goal);
+
+            // Update badge
+            const badge = document.getElementById('goalBadge');
+            badge.className = `goal-badge ${goal}`;
+            badge.textContent = goal === 'girl' ? '♀ Nudging toward Girl' : '♂ Nudging toward Boy';
+
+            // Update date
+            document.getElementById('dateDisplay').textContent = dateString;
+
+            // Render today's nudges
+            renderNudges(goal);
+        }
+
+        function renderNudges(goal) {
+            const nudgePool = goal === 'girl' ? girlNudges : boyNudges;
+            const categories = Object.keys(nudgePool);
+            
+            // Pick one nudge from each category, rotating by day
+            const todaysNudges = categories.map((category, i) => {
+                const categoryNudges = nudgePool[category];
+                const index = (dayOfYear + i) % categoryNudges.length;
+                return { ...categoryNudges[index], category };
+            });
+
+            // Build HTML
+            const nudgesList = document.getElementById('nudgesList');
+            nudgesList.innerHTML = todaysNudges.map((nudge, i) => `
+                <div class="nudge-card" id="nudge-${i}">
+                    <div class="nudge-icon">${nudge.icon}</div>
+                    <div class="nudge-content">
+                        <div class="nudge-title">${nudge.title}</div>
+                        <div class="nudge-detail">${nudge.detail}</div>
+                        <div class="nudge-science">${nudge.science}</div>
+                    </div>
+                    <div class="nudge-checkbox">
+                        <input type="checkbox" onchange="updateProgress(${i})">
+                    </div>
+                </div>
+            `).join('');
+
+            // Reset progress
+            updateProgressDisplay();
+        }
+
+        function updateProgress(index) {
+            const card = document.getElementById(`nudge-${index}`);
+            const checkbox = card.querySelector('input[type="checkbox"]');
+            
+            if (checkbox.checked) {
+                card.classList.add('completed');
+            } else {
+                card.classList.remove('completed');
+            }
+
+            updateProgressDisplay();
+        }
+
+        function updateProgressDisplay() {
+            const checked = document.querySelectorAll('#nudgesList input[type="checkbox"]:checked').length;
+            const total = document.querySelectorAll('#nudgesList input[type="checkbox"]').length;
+            document.getElementById('progressCircle').textContent = `${checked}/${total}`;
+        }
+
+        // Check for goal in URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        const goalParam = urlParams.get('goal');
+        if (goalParam === 'boy' || goalParam === 'girl') {
+            selectGoal(goalParam);
+        }
+    </script>
+</body>
+</html>
