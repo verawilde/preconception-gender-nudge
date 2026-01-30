@@ -1578,8 +1578,9 @@
             <div class="success-message">
                 <div class="success-icon">🌱</div>
                 <h2 style="font-family: 'Crimson Pro', serif; font-size: 2rem; margin-bottom: 1rem;">Baseline Complete!</h2>
-                <p style="color: var(--soft-gray); margin-bottom: 2rem;">Your baseline data has been saved. You're ready to start daily logging and receive personalized nudges.</p>
-                <button class="btn btn-primary" onclick="window.location.href='daily-log.html'">Start Daily Logging</button>
+                <p style="color: var(--soft-gray); margin-bottom: 2rem;">Your baseline data has been saved. Check out your personalized daily nudges based on your goal.</p>
+                <button class="btn btn-primary" onclick="goToNudges()">See My Daily Nudges →</button>
+                <p style="margin-top: 1rem;"><a href="index.html" style="color: var(--sage);">← Back to Science Overview</a></p>
             </div>
         </div>
     </div>
@@ -1972,6 +1973,12 @@
                     this.value === 'yes' ? 'block' : 'none';
             });
         });
+
+        // Go to nudges page with goal parameter
+        window.goToNudges = function() {
+            const goal = document.querySelector('input[name="goal"]:checked')?.value || 'girl';
+            window.location.href = `nudges.html?goal=${goal}`;
+        };
     </script>
 </body>
 </html>
